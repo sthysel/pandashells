@@ -32,9 +32,10 @@ setup(
 
     entry_points={
             'console_scripts': [
+                'p.config = pandashells.bin.p_config:main',
+                'p.crypt = pandashells.bin.p_crypt:main',
                 'p.df = pandashells.bin.p_df:main',
                 'p.sig_edit = pandashells.bin.p_sig_edit:main',
-                'p.config = pandashells.bin.p_config:main',
             ],
         }
 )

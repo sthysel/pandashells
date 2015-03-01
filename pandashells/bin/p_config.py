@@ -2,13 +2,12 @@
 
 # --- standard library imports
 import os
-import sys
 import argparse
 
 from pandashells.lib import config_lib
 
-def main():
 
+def main():
     # --- read in the current configuration
     default_dict = config_lib.get_config()
 
@@ -42,11 +41,11 @@ def main():
     config_lib.set_config(config_dict)
 
     print '\n Current Config'
-    print '  ' + '-'*40
+    print '  ' + '-' * 40
     for k in sorted(config_dict.keys()):
         if k not in ['--force_defaults']:
-            print '  {: <20} {}'.format(k+':', repr(str(config_dict[k])))
+            print '  {: <20} {}'.format(k + ':', repr(str(config_dict[k])))
 
 
-if __name__ == '__main__': # pragma: no cover
+if __name__ == '__main__':  # pragma: no cover
     main()

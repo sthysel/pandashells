@@ -14,40 +14,90 @@ from unittest import TestCase
 from pandashells.lib import config_lib
 from pandashells.bin.p_crypt import main
 
-DIR_NAME = tempfile.mkdtemp()
-IN_FILE_NAME = os.path.join(self.dir_name, 'test.txt')
-DECRYPTED_FILE_NAME = os.path.join(self.dir_name, 'test2.txt')
-CRYPT_FILE_NAME = os.path.join(self.dir_name, 'test.txt')
 
-
-
-@contextmanager
-def mute_output():
-    sys.stdout = MagicMock()
-    yield
-    sys.stdout = sys.__stdout__
+#@contextmanager
+#def mute_output():
+#    sys.stdout = MagicMock()
+#    yield
+#    sys.stdout = sys.__stdout__
 
 
 class MainTests(TestCase):
-    def setUp(self):
-        self.dir_name = tempfile.mkdtemp()
-        self.in_file_name = os.path.join(self.dir_name, 'test.txt')
-        self.decrypted_file_name = os.path.join(self.dir_name, 'test2.txt')
-        self.crypt_file_name = os.path.join(self.dir_name, 'test.txt')
-        with open(self.in_file_name, 'w') as f:
-            f.write('this is a test')
 
-    def tearDown(self):
-        shutil.rmtree(self.dir_name)
+    @patch(
+        'pandashells.bin.p_crypt.sys.argv',
+        'p.crypt -i my_in -o my_out'.split())
+    @patch('pandashells.bin.p_crypt.os.system')
+    @patch('pandashells.bin.p_crypt.os.path.isfile')
+    def test_proper_encrypt(self, isfile_mock, system_mock):
+        isfile_mock.return_value = True
+        main()
+        system_mock.assert_called_with(
+            'cat my_in | openssl enc -aes-256-cbc -salt  > my_out')
 
-    @patch('pandashells.p_crypt.sys.argv')
-    def test_nothing(self, argv):
-        argv
-        #print
-        #cmd = ''.format(self.in_file_name, self.crypt_file_name)
-        #os.system(cmd)
-        #print
-        #print cmd
+    @patch(
+        'pandashells.bin.p_crypt.sys.argv',
+        'p.crypt -i my_in -o my_out -v'.split())
+    @patch('pandashells.bin.p_crypt.sys.stdout')
+    @patch('pandashells.bin.p_crypt.os.system')
+    @patch('pandashells.bin.p_crypt.os.path.isfile')
+    def test_proper_encrypt_verbose(
+            self, isfile_mock, system_mock, stdout_mock):
+        stdout_mock.write = MagicMock()
+        isfile_mock.return_value = True
+        main()
+        system_mock.assert_called_with(
+            'cat my_in | openssl enc -aes-256-cbc -salt  > my_out')
+        self.assertTrue(stdout_mock.write.called)
+
+
+
+    @patch(
+        'pandashells.bin.p_crypt.sys.argv',
+        'p.crypt -i my_in -o my_out --password xx'.split())
+    @patch('pandashells.bin.p_crypt.os.system')
+    @patch('pandashells.bin.p_crypt.os.path.isfile')
+    def test_proper_encypt_with_password(self, isfile_mock, system_mock):
+        isfile_mock.return_value = True
+        main()
+        system_mock.assert_called_with(
+            "cat my_in | openssl enc -aes-256-cbc -salt -k 'xx' > my_out")
+
+    @patch(
+        'pandashells.bin.p_crypt.sys.argv',
+        'p.crypt -i my_in -o my_out --password xx'.split())
+    @patch('pandashells.bin.p_crypt.sys.stderr')
+    @patch('pandashells.bin.p_crypt.os.system')
+    @patch('pandashells.bin.p_crypt.os.path.isfile')
+    def test_proper_encypt_no_input_file(
+            self, isfile_mock, stderr_mock, system_mock):
+        isfile_mock.return_value = False
+        with self.assertRaises(SystemExit):
+            main()
+
+    @patch(
+        'pandashells.bin.p_crypt.sys.argv',
+        'p.crypt -i my_in -o my_out -d'.split())
+    @patch('pandashells.bin.p_crypt.os.system')
+    @patch('pandashells.bin.p_crypt.os.path.isfile')
+    def test_proper_decrypt(self, isfile_mock, system_mock):
+        isfile_mock.return_value = True
+        main()
+        system_mock.assert_called_with(
+            'cat my_in | openssl enc -d -aes-256-cbc  > my_out')
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     #@patch(

@@ -13,11 +13,11 @@ def main():
     #  read command line arguments
     parser = argparse.ArgumentParser(description=msg)
 
-    arg_lib.addArgs(parser, 'example')
+    arg_lib.add_args(parser, 'example')
 
     parser.add_argument(
-        '-i', '--inFile', nargs=1, type=str,
-        required=True, dest='inFile', metavar='inFileName',
+        '-i', '--in_file', nargs=1, type=str,
+        required=True, dest='in_file', metavar='in_file_name',
         help="The input file name")
 
     parser.add_argument(
@@ -42,22 +42,23 @@ def main():
     args = parser.parse_args()
 
     #  make sure input file exists
-    if not os.path.isfile(args.inFile[0]):
-        sys.stderr.write("\n\nCan't find input file\n\n")
+    if not os.path.isfile(args.in_file[0]):
+        sys.stderr.write(
+            "\n\nCan't find input file: {}\n\n".format(args.in_file[0]))
         sys.exit(1)
 
     # populate a password string
-    password_string = '-k {}'.format(
+    password_string = "-k '{}'".format(
         args.password[0]) if args.password else ''
 
     #  create a dycryption command if requested
     if args.decrypt:
         cmd = "cat {} | openssl enc -d -aes-256-cbc {} > {}".format(
-            args.inFile[0], password_string, args.outFile[0])
+            args.in_file[0], password_string, args.outFile[0])
     #  otherwise just encrypt
     else:
         cmd = "cat {} | openssl enc -aes-256-cbc -salt {} > {}".format(
-            args.inFile[0], password_string, args.outFile[0])
+            args.in_file[0], password_string, args.outFile[0])
 
     # print verbose if requested
     if args.verbose:
@@ -65,5 +66,6 @@ def main():
     #  run the proper openssl command
     os.system(cmd)
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
+
     main()

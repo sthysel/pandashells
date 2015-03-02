@@ -1,34 +1,50 @@
 #! /usr/bin/env python
 
-# --- standard library imports
-import os
+# standard library imports
 import sys
 import argparse
-import re
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib
 
-# --- import required dependencies
-modulesOkay = module_checker_lib.check_for_modules(['pandas'])
-if not modulesOkay:
-    sys.exit(1)
+# import required dependencies
+module_checker_lib.check_for_modules(['pandas'])
 
 import pandas as pd
 
-# =============================================================================
-if __name__ == '__main__':
+
+def validate_args(args):
+    # make sure join criteria are properly specified
+    if (args.left_on is None) and not (args.right_on is None):
+        msg = '\nMust specify both left_on and right_on '
+        msg += 'if either is specified\n\n'
+        sys.stderr.write(msg)
+        sys.exit(1)
+    if (args.right_on is None) and not (args.left_on is None):
+        msg = '\nMust specify both left_on and right_on '
+        msg += 'if either is specified\n\n'
+        sys.stderr.write(msg)
+        sys.exit(1)
+    if (args.right_on is None) and (args.left_on is None) and \
+            (args.on is None):
+        msg = '\nMust specify a join criteria\n\n'
+        sys.stderr.write(msg)
+        sys.exit(1)
+    if not (args.left_on is None):
+        args.on = None
+
+
+def main():
     msg = "Tool to merge dataframes.  Similar functionality to database "
     msg += " joins. The arguments closely parallel those of the pandas merge "
     msg += "command.  See the pandas merge documentation for more details."
 
-    # --- read command line arguments
+    # read command line arguments
     parser = argparse.ArgumentParser(description=msg)
 
-    arg_lib.addArgs(parser, 'io_in', 'io_out', 'example',  # DO I REALLY NEED IO_IN ??
-                    io_no_col_spec_allowed=True)
+    arg_lib.add_args(parser, 'io_in', 'io_out', 'example')  # DO I REALLY NEED IO_IN ??
 
     parser.add_argument('--how', choices=['left', 'right', 'inner', 'outer'],
-                        dest='how',  default=['inner'], nargs=1,
+                        dest='how', default=['inner'], nargs=1,
                         help="Type of join.  Default='inner'")
 
     msg = 'List of of columns on which to join'
@@ -52,51 +68,30 @@ if __name__ == '__main__':
     parser.add_argument("file", help="Files to join", nargs=2, type=str,
                         metavar='file file')
 
-    # --- parse arguments
     args = parser.parse_args()
+    validate_args(args)
 
-    # --- make sure join criteria are properly specified
-    if (args.left_on is None) and not (args.right_on is None):
-        msg = '\nMust specify both left_on and right_on '
-        msg += 'if either is specified\n\n'
-        sys.stderr.write(msg)
-        sys.exit(1)
-    if (args.right_on is None) and not (args.left_on is None):
-        msg = '\nMust specify both left_on and right_on '
-        msg += 'if either is specified\n\n'
-        sys.stderr.write(msg)
-        sys.exit(1)
-    if (args.right_on is None) and (args.left_on is None) and \
-            (args.on is None):
-        msg = '\nMust specify a join criteria\n\n'
-        sys.stderr.write(msg)
-        sys.exit(1)
-    if not (args.left_on is None):
-        args.on = None
+    # get merge options from cli
+    how = args.how[0]
+    on = args.on if args.on else None
+    left_on = args.left_on if args.left_on else None
+    right_on = args.right_on if args.right_on else None
+    suffixes = args.suffixes
 
-    # --- get file names
+    # get file names
     left_name, right_name = tuple(args.file)
 
-    # --- load the dataframes
+    # load the dataframes
     df_left = io_lib.df_from_input(args, left_name)
     df_right = io_lib.df_from_input(args, right_name)
 
-    # --- set default merge options
-    how = args.how[0]
-    on, left_on, right_on = None, None, None
-
-    # --- set merge options for cli
-    if args.on:
-        on = args.on
-    if args.left_on:
-        left_on = args.left_on
-    if args.right_on:
-        right_on = args.right_on
-    suffixes = args.suffixes
-
-    # --- perform the merge
+    # perform the merge
     dfj = pd.merge(df_left, df_right, how=how, on=on, left_on=left_on,
                    right_on=right_on, sort=True, suffixes=suffixes)
 
-    # --- output the joined frame
+    # output the joined frame
     io_lib.df_to_output(args, dfj)
+
+
+if __name__ == '__main__':  # pragma: no cover
+    main()

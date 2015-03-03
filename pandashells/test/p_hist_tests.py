@@ -2,28 +2,37 @@
 from mock import patch, MagicMock
 from unittest import TestCase
 
-from pandashells.bin.p_plot import main
+from pandashells.bin.p_hist import main, get_input_args, validate_args, main
 
+class GetInputArgsTests(TestCase):
+    @patch('pandashells.bin.p_hist.sys.argv',
+            'p.hist -c x -n 30'.split())
+    def test_right_number_of_args(self):
+        args = get_input_args()
+        self.assertEqual(len(args.__dict__), 25)
 
-class MainTests(TestCase):
-    @patch('pandashells.bin.p_plot.argparse.ArgumentParser')
-    @patch('pandashells.bin.p_plot.arg_lib.add_args')
-    @patch('pandashells.bin.p_plot.io_lib.df_from_input')
-    @patch('pandashells.bin.p_plot.plot_lib.set_plot_styling')
-    @patch('pandashells.bin.p_plot.plot_lib.draw_xy_plot')
-    def test_plotting(
-            self, draw_xy_mock, set_plot_styling_mock, df_from_input_mock,
-            add_args_mock, ArgumentParserMock):
-        args = MagicMock()
-        parser = MagicMock(parse_args=MagicMock(return_value=args))
-        ArgumentParserMock.return_value = parser
-        df_from_input_mock.return_value = 'df'
+class ValidateArgs(TestCase):
+    def test_okay(self):
+        # passing test means nothing raised
+        args = MagicMock(quiet=False)
+        cols = ['a']
+        df = MagicMock(columns=['a'])
+        validate_args(args, cols, df)
 
-        main()
+    @patch('pandashells.bin.p_hist.sys.stderr')
+    def test_bad_cols(self, stderr_mock):
+        # passing test means nothing raised
+        args = MagicMock(quiet=False)
+        cols = ['b']
+        df = MagicMock(columns=['a'])
+        with self.assertRaises(SystemExit):
+            validate_args(args, cols, df)
 
-        add_args_mock.assert_called_with(
-            parser, 'io_in', 'xy_plotting', 'decorating', 'example')
-
-        df_from_input_mock.assert_called_with(args)
-        set_plot_styling_mock.assert_called_with(args)
-        draw_xy_mock.assert_called_with(args, 'df')
+    @patch('pandashells.bin.p_hist.sys.stderr')
+    def test_bad_quiet(self, stderr_mock):
+        # passing test means nothing raised
+        args = MagicMock(quiet=True)
+        cols = ['a', 'b']
+        df = MagicMock(columns=['a', 'b'])
+        with self.assertRaises(SystemExit):
+            validate_args(args, cols, df)

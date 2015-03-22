@@ -28,7 +28,6 @@ def get_input_args():
 
     arg_lib.add_args(parser, 'io_in', 'io_out', 'example', 'decorating')
 
-    #WANT TO ADD A -o OPTION TO THIS TO OUTPUT BIN COUNTS
     # specify columns to histogram
     parser.add_argument('-c', '--cols',
         help='Column(s) to histogram', nargs='+')
@@ -88,7 +87,7 @@ def main():
     # no plotting if output requested
     if args.quiet:
         counts, edges = np.histogram(
-            df[column[0]], bins=nbins, range=range_tup, density=do_density)
+            df[cols[0]], bins=nbins, range=range_tup, density=do_density)
         centers = edges[:-1] + 0.5 * np.diff(edges)
         df_out = pd.DataFrame({'bins': centers, 'counts': counts})
         io_lib.df_to_output(args, df_out)
@@ -102,6 +101,6 @@ def main():
         plot_lib.refine_plot(args)
         plot_lib.show(args)
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
 

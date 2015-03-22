@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 from mock import patch, MagicMock
 from unittest import TestCase
+import pandas as pd
 
 from pandashells.bin.p_hist import main, get_input_args, validate_args, main
 
@@ -36,3 +37,34 @@ class ValidateArgs(TestCase):
         df = MagicMock(columns=['a', 'b'])
         with self.assertRaises(SystemExit):
             validate_args(args, cols, df)
+
+
+class MainTests(TestCase):
+    @patch(
+        'pandashells.bin.p_hist.sys.argv',
+        'p.hist -c x -q -n 10'.split())
+    @patch('pandashells.bin.p_hist.io_lib.df_to_output')
+    @patch('pandashells.bin.p_hist.io_lib.df_from_input')
+    def test_cli_quiet(self, df_from_input_mock, df_to_output_mock):
+        df_in = pd.DataFrame({
+            'x': range(1, 101)
+        })
+        df_from_input_mock.return_value = df_in
+        main()
+        df_out = df_to_output_mock.call_args_list[0][0][1]
+        self.assertEqual(set(df_out.columns), {'bins', 'counts'})
+        self.assertEqual(set(df_out.counts), {10})
+
+    @patch(
+        'pandashells.bin.p_hist.sys.argv',
+        'p.hist -c x -n 10'.split())
+    @patch('pandashells.bin.p_hist.plot_lib.show')
+    @patch('pandashells.bin.p_hist.io_lib.df_from_input')
+    def test_cli(self, df_from_input_mock, show_mock):
+        df_in = pd.DataFrame({
+            'x': range(1, 101)
+        })
+        df_from_input_mock.return_value = df_in
+        main()
+        self.assertTrue(show_mock.called)
+

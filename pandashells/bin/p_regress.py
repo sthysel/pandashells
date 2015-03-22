@@ -17,18 +17,17 @@ module_checker_lib.check_for_modules([
     'numpy',
     'scipy'])
 
-import pandas as pd
-import numpy as np
-import scipy as scp
+from matplotlib import pyplot as plt
 import matplotlib as mpl
+import numpy as np
+import pandas as pd
 import pylab as pl
-import statsmodels.formula.api as sm
+import scipy as scp
 import seaborn as sns
+import statsmodels.formula.api as sm
 
-#sns.set_context('talk')
-#mpl.rcParams['figure.facecolor'] = (.98, .98, .98)
-#mpl.rcParams['figure.edgecolor'] = (.98, .98, .98)
 
+#TODO: reworked some of this code.  Haven't started testing yet.  So start writing tests
 def main():
     msg = "Performs (multivariable) linear regression.  Fitting model "
     msg += "is specified using the patsy language.  Input is from stdin "
@@ -38,7 +37,7 @@ def main():
     # read command line arguments
     parser = argparse.ArgumentParser(description=msg)
 
-    arg_lib.add_args(parser, 'io_in', 'io_out', 'example', 'decorating')
+    arg_lib.add_args(parser, 'io_in', 'io_out', 'example')
 
     # specify columns to histogram
     parser.add_argument("-m", "--model", type=str, nargs=1, required=True,
@@ -50,9 +49,6 @@ def main():
 
     parser.add_argument("--plot", action="store_true",
                         default=False, help="Make residual plots")
-
-    parser.add_argument("-a", "--alpha", help="Set opacity",
-                        nargs=1, default=[0.5], type=float)
 
     # parse arguments
     args = parser.parse_args()
@@ -71,29 +67,31 @@ def main():
         sys.exit(0)
 
     # print the fit summary
-    print result.summary()
+    sys.stdout.write('\n{}\n'.format(result.summary()))
+    #print result.summary()
     sys.stdout.flush()
 
     # do plots if requested
     if args.plot:
         pl.subplot(211)
-        # pl.figure()
-        pl.plot(df._fit, df._resid, '.', alpha=args.alpha[0])
-        # pl.xlabel('Fit Value with $R^2 = {:0.4f}$'.format(result.rsquared))
+        pl.plot(df._fit, df._resid, '.', alpha=.5)
         pl.xlabel('Fit')
         pl.ylabel('Residual')
         pl.title(args.model[0])
 
-        # pl.figure()
         pl.subplot(212)
         sns.distplot(df._resid, bins=50)
-        pl.xlabel('Residual with $R^2 = {:0.4f}$'.format(result.rsquared))
+        pl.xlabel('Residual with R^2 = {:0.4f}'.format(result.rsquared))
         pl.ylabel('Counts')
-        # pl.title(args.model[0])
+
+        # annoying backend issue with osx backend forces if statement here 
+        if mpl.get_backend().lower() in ['agg', 'macosx']:
+            pl.gcf().set_tight_layout(True)
+        else:
+            pl.gcf().tight_layout()
+
         plot_lib.show(args)
 
-
-    #plot_lib.set_plot_styling(args)
 
 if __name__ == '__main__':
     main()

@@ -1,70 +1,87 @@
 #! /usr/bin/env python
+import sys
+import re
 from mock import patch, MagicMock
 from unittest import TestCase
+import numpy as np
 import pandas as pd
 
-from pandashells.bin.p_hist import main, get_input_args, validate_args, main
-
-class GetInputArgsTests(TestCase):
-    @patch('pandashells.bin.p_hist.sys.argv',
-            'p.hist -c x -n 30'.split())
-    def test_right_number_of_args(self):
-        args = get_input_args()
-        self.assertEqual(len(args.__dict__), 25)
-
-class ValidateArgs(TestCase):
-    def test_okay(self):
-        # passing test means nothing raised
-        args = MagicMock(quiet=False)
-        cols = ['a']
-        df = MagicMock(columns=['a'])
-        validate_args(args, cols, df)
-
-    @patch('pandashells.bin.p_hist.sys.stderr')
-    def test_bad_cols(self, stderr_mock):
-        # passing test means nothing raised
-        args = MagicMock(quiet=False)
-        cols = ['b']
-        df = MagicMock(columns=['a'])
-        with self.assertRaises(SystemExit):
-            validate_args(args, cols, df)
-
-    @patch('pandashells.bin.p_hist.sys.stderr')
-    def test_bad_quiet(self, stderr_mock):
-        # passing test means nothing raised
-        args = MagicMock(quiet=True)
-        cols = ['a', 'b']
-        df = MagicMock(columns=['a', 'b'])
-        with self.assertRaises(SystemExit):
-            validate_args(args, cols, df)
+from pandashells.bin.p_regress import main
 
 
 class MainTests(TestCase):
     @patch(
-        'pandashells.bin.p_hist.sys.argv',
-        'p.hist -c x -q -n 10'.split())
-    @patch('pandashells.bin.p_hist.io_lib.df_to_output')
-    @patch('pandashells.bin.p_hist.io_lib.df_from_input')
-    def test_cli_quiet(self, df_from_input_mock, df_to_output_mock):
+        'pandashells.bin.p_regress.sys.argv',
+        'p.regress -m y~x'.split())
+    @patch('pandashells.bin.p_regress.io_lib.df_to_output')
+    @patch('pandashells.bin.p_regress.io_lib.df_from_input')
+    def test_cli_stats(self, df_from_input_mock, df_to_output_mock):
         df_in = pd.DataFrame({
-            'x': range(1, 101)
+            'x': range(1, 101),
+            'y': range(1, 101),
         })
         df_from_input_mock.return_value = df_in
+        write_mock = MagicMock()
+        sys.stdout = MagicMock()
+        sys.stdout.write = write_mock
         main()
-        df_out = df_to_output_mock.call_args_list[0][0][1]
-        self.assertEqual(set(df_out.columns), {'bins', 'counts'})
-        self.assertEqual(set(df_out.counts), {10})
+        sys.stdout = sys.__stdout__
+        out_str =  write_mock.call_args_list[0][0][0].replace('\n', ' ')
+        rex = re.compile(r'.*x\s+1\.0+')
+        m = rex.match(out_str)
+        self.assertTrue(True if m else False)
 
     @patch(
-        'pandashells.bin.p_hist.sys.argv',
-        'p.hist -c x -n 10'.split())
-    @patch('pandashells.bin.p_hist.plot_lib.show')
-    @patch('pandashells.bin.p_hist.io_lib.df_from_input')
-    def test_cli(self, df_from_input_mock, show_mock):
+        'pandashells.bin.p_regress.sys.argv',
+        'p.regress -m y~x --plot'.split())
+    @patch('pandashells.bin.p_regress.plot_lib.show')
+    @patch('pandashells.bin.p_regress.io_lib.df_from_input')
+    @patch('pandashells.bin.p_regress.mpl.get_backend')
+    @patch('pandashells.bin.p_regress.pl.gcf')
+    def test_cli_plots_osx(self,
+            gcf_mock, backend_mock, df_from_input_mock, show_mock):
+        backend_mock.return_value = 'macosx'
         df_in = pd.DataFrame({
-            'x': range(1, 101)
+            'x': range(1, 101),
+            'y': range(1, 101),
+        })
+        df_from_input_mock.return_value = df_in
+        sys.stdout = MagicMock()
+        main()
+        sys.stdout = sys.__stdout__
+        self.assertTrue(show_mock.called)
+
+    @patch(
+        'pandashells.bin.p_regress.sys.argv',
+        'p.regress -m y~x --plot'.split())
+    @patch('pandashells.bin.p_regress.plot_lib.show')
+    @patch('pandashells.bin.p_regress.io_lib.df_from_input')
+    @patch('pandashells.bin.p_regress.mpl.get_backend')
+    def test_cli_plots_tkagg(self, backend_mock, df_from_input_mock, show_mock):
+        backend_mock.return_value = 'macosx'
+        df_in = pd.DataFrame({
+            'x': range(1, 101),
+            'y': range(1, 101),
+        })
+        df_from_input_mock.return_value = df_in
+        sys.stdout = MagicMock()
+        main()
+        sys.stdout = sys.__stdout__
+        self.assertTrue(show_mock.called)
+
+    @patch(
+        'pandashells.bin.p_regress.sys.argv',
+        'p.regress -m y~x --fit'.split())
+    @patch('pandashells.bin.p_regress.io_lib.df_to_output')
+    @patch('pandashells.bin.p_regress.io_lib.df_from_input')
+    def test_cli_fit(self, df_from_input_mock, df_to_output_mock):
+        df_in = pd.DataFrame({
+            'x': range(1, 101),
+            'y': range(1, 101),
         })
         df_from_input_mock.return_value = df_in
         main()
-        self.assertTrue(show_mock.called)
 
+        df_out = df_to_output_mock.call_args_list[0][0][1]
+        self.assertTrue(np.allclose(df_out.y, df_out._fit))
+        self.assertTrue(np.allclose(df_out.y * 0, df_out._resid))

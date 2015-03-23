@@ -64,11 +64,10 @@ def main():
     # add and output the fit results if requested
     if args.retfit:
         io_lib.df_to_output(args, df)
-        sys.exit(0)
+        return
 
     # print the fit summary
     sys.stdout.write('\n{}\n'.format(result.summary()))
-    #print result.summary()
     sys.stdout.flush()
 
     # do plots if requested
@@ -93,6 +92,6 @@ def main():
         plot_lib.show(args)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
 

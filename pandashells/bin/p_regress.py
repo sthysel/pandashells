@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 
 # standard library imports
-import os
 import sys
 import argparse
-import re
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 
@@ -17,17 +15,12 @@ module_checker_lib.check_for_modules([
     'numpy',
     'scipy'])
 
-from matplotlib import pyplot as plt
 import matplotlib as mpl
-import numpy as np
-import pandas as pd
 import pylab as pl
-import scipy as scp
 import seaborn as sns
 import statsmodels.formula.api as sm
 
 
-#TODO: reworked some of this code.  Haven't started testing yet.  So start writing tests
 def main():
     msg = "Performs (multivariable) linear regression.  Fitting model "
     msg += "is specified using the patsy language.  Input is from stdin "

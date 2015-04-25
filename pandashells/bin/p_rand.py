@@ -28,44 +28,66 @@ N, p work for binomail
 alpha, beta work for uniform, beta
 """
 
-# this dict holds info on all valid distribution types
-TYPE_LIST = [{
-    'name': 'uniform',
-    'param_list': [
-        {'name': 'low', 'val': 0},
-        {'name': 'high', 'val': 1}, ]},
-    {
-    'name': 'normal',
-    'param_list': [
-        {'name': 'loc', 'val': 0},
-        {'name': 'scale', 'val': 1}]},
-    {
-    'name': 'binomial',
-    'param_list': [
-        {'name': 'n', 'val': 1},
-        {'name': 'p', 'val': .5}]},
-    {
-    'name': 'beta',
-    'param_list': [
-        {'name': 'a', 'val': 1},
-        {'name': 'b', 'val': 1},
-    ],
-    },
-    {
-    'name': 'gamma',
-    'param_list': [
-        {'name': 'shape', 'val': 1},
-        {'name': 'scale', 'val': 1},
-    ],
-    },
-    {
-    'name': 'poisson',
-    'param_list': [{'name': 'lam', 'val': 1}],
-    },
-    {
-    'name': 'standard_t',
-    'param_list': [{'name': 'df', 'val': 1}],
-    }]
+## this dict holds info on all valid distribution types
+#TYPE_LIST = [{
+#    'name': 'uniform',
+#    'param_list': [
+#        {'name': 'low', 'val': 0},
+#        {'name': 'high', 'val': 1}, ]},
+#    {
+#    'name': 'normal',
+#    'param_list': [
+#        {'name': 'loc', 'val': 0},
+#        {'name': 'scale', 'val': 1}]},
+#    {
+#    'name': 'binomial',
+#    'param_list': [
+#        {'name': 'n', 'val': 1},
+#        {'name': 'p', 'val': .5}]},
+#    {
+#    'name': 'beta',
+#    'param_list': [
+#        {'name': 'a', 'val': 1},
+#        {'name': 'b', 'val': 1},
+#    ],
+#    },
+#    {
+#    'name': 'gamma',
+#    'param_list': [
+#        {'name': 'shape', 'val': 1},
+#        {'name': 'scale', 'val': 1},
+#    ],
+#    },
+#    {
+#    'name': 'poisson',
+#    'param_list': [{'name': 'lam', 'val': 1}],
+#    },
+#    {
+#    'name': 'standard_t',
+#    'param_list': [{'name': 'df', 'val': 1}],
+#    }]
+
+
+
+
+def get_samples(args):
+    distribution_for = {
+        'normal': {
+            'function': np.random.normal,
+            'kwargs': {
+                'loc':  args.mu[0],
+                'scale': args.sigma[0],
+                'size': (args.num_samples, args.columns),
+            },
+        },
+
+    }
+
+    dist = distribution_for[args.type[0]]
+    values = dist['function'](**dist['kwargs'])
+    columns = ['c{}'.format(c) for c in range(args.columns[0])]
+    return pd.DataFrame(values, columns=columns)
+
 
 def main():
     #TODO: write docs for this
@@ -74,12 +96,12 @@ def main():
         Return random samples from common probability distrubtions.
 
         Examples:
-            uniform:  p.rand -n 10 -t uniform  --min=0    --max=1
-            normal:   p.rand -n 10 -t normal   --mu=0     --sigma=1
-            poisson:  p.rand -n 10 -t poisson  --mu=1
-            beta:     p.rand -n 10 -t beta     --alpha=1  --beta=1
-            gamma:    p.rand -n 10 -t gamma    --alpha=1, --beta=1
-            binomial: p.rand -n 10 -t binomial --N=10     --p=0.5
+            uniform:  p.rand -n 1000 -t uniform  --min=0    --max=1   | p.hist
+            normal:   p.rand -n 1000 -t normal   --mu=0     --sigma=1 | p.hist
+            poisson:  p.rand -n 1000 -t poisson  --mu=1               | p.hist
+            beta:     p.rand -n 1000 -t beta     --alpha=2  --beta=6  | p.hist
+            gamma:    p.rand -n 1000 -t gamma    --alpha=1  --beta=1  | p.hist
+            binomial: p.rand -n 1000 -t binomial --N=10     --p=0.4   | p.hist
     """)
 
     # read command line arguments
@@ -104,22 +126,28 @@ def main():
         help=(
             '(Binomial Dist) Largest possible value for random variable. '
             '(default=10)'
-        ))
+        )
+    )
+
+    #TODO:  maybe take the default away from this one and hard code it to adapt
+    parser.add_argument(
+        '--mu', nargs=1, default=[0.], type=float,
+        help='(Normal, Poisson) Mean (defaults: normal:0, poisson:1')
+
+    parser.add_argument(
+        '--sigma', nargs=1, default=[1.], type=float,
+        help='(Normal) standard deviation, (default: 1)')
 
     arg_lib.add_args(parser, 'io_out', 'example')
 
+    # parse arguments
+    args = parser.parse_args()
 
-    """
-    What if I had interface like this?
+    df = get_samples(args)
+    print
+    print df.to_string()
+    sys.exit()
 
-    p.rand -n 100 -c 2 -t normal --mu --sigma --alpha -beta -N -p -k --theta --min --max
-    -t = uniform normal beta gamma binomial poisson (maybe divide uniform into float and int)
-    where mu, sigma can work for normal, gamma, beta
-    min max work for uniform
-    mu works for poisson
-    N, p work for binomail
-    alpha, beta work for uniform, beta
-    """
 
 
 

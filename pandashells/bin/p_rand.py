@@ -16,18 +16,6 @@ module_checker_lib.check_for_modules(['pandas', 'numpy'])
 import pandas as pd
 import numpy as np
 
-"""
-What if I had interface like this?
-
-p.rand -n 100 -c 2 -t normal --mu --sigma --alpha -beta -N -p -k --theta --min --max
--t = uniform normal beta gamma binomial poisson (maybe divide uniform into float and int)
-where mu, sigma can work for normal, gamma, beta
-min max work for uniform
-mu works for poisson
-N, p work for binomail
-alpha, beta work for uniform, beta
-"""
-
 ## this dict holds info on all valid distribution types
 #TYPE_LIST = [{
 #    'name': 'uniform',
@@ -68,16 +56,54 @@ alpha, beta work for uniform, beta
 #    }]
 
 
+def fill_default_mu(args):
+    if args.type[0] == 'normal':
+        args.mu = [0.] if args.mu is None else args.mu
+    elif args.type[0] == 'poisson':
+        args.mu = [1.] if args.mu is None else args.mu
+    return args
+
 
 
 def get_samples(args):
     distribution_for = {
+        'uniform': {
+            'function': np.random.uniform,
+            'kwargs': {
+                'low': args.min[0],
+                'high': args.max[0],
+                'size': (args.num_samples[0], args.columns[0]),
+            },
+        },
         'normal': {
             'function': np.random.normal,
             'kwargs': {
-                'loc':  args.mu[0],
+                'loc': args.mu[0] if args.mu else None,
                 'scale': args.sigma[0],
-                'size': (args.num_samples, args.columns),
+                'size': (args.num_samples[0], args.columns[0]),
+            },
+        },
+        'poisson': {
+            'function': np.random.poisson,
+            'kwargs': {
+                'lam': args.mu[0] if args.mu else None,
+                'size': (args.num_samples[0], args.columns[0]),
+            },
+        },
+        'beta': {
+            'function': np.random.beta,
+            'kwargs': {
+                'a': args.alpha[0],
+                'b': args.beta[0],
+                'size': (args.num_samples[0], args.columns[0]),
+            },
+        },
+        'gamma': {
+            'function': np.random.gamma,
+            'kwargs': {
+                'shape': args.alpha[0],
+                'scale': 1. / args.beta[0],
+                'size': (args.num_samples[0], args.columns[0]),
             },
         },
 
@@ -116,11 +142,9 @@ def main():
     parser.add_argument(
         '-n', '--num_samples', nargs=1, default=[10], type=int,
         help='The number of rows to generate (default=10)')
-
     parser.add_argument(
         '-c', '--columns', nargs=1, default=[1], type=int,
         help='The number of columns to generate per row (default=1)')
-
     parser.add_argument(
         '--N', nargs=1, default=[10], type=int,
         help=(
@@ -128,70 +152,40 @@ def main():
             '(default=10)'
         )
     )
-
-    #TODO:  maybe take the default away from this one and hard code it to adapt
     parser.add_argument(
-        '--mu', nargs=1, default=[0.], type=float,
+        '--mu', nargs=1, type=float,
         help='(Normal, Poisson) Mean (defaults: normal:0, poisson:1')
-
     parser.add_argument(
         '--sigma', nargs=1, default=[1.], type=float,
         help='(Normal) standard deviation, (default: 1)')
+    parser.add_argument(
+        '--min', nargs=1, default=[0.], type=float,
+        help='(Uniform) Minimum value of range, (default: 0)')
+    parser.add_argument(
+        '--max', nargs=1, default=[1.], type=float,
+        help='(Uniform) Maximum value of range, (default: 1)')
+    parser.add_argument(
+        '--alpha', nargs=1, default=[2.], type=float,
+        help='(Beta, Gamma)  (default: 2)')
+    parser.add_argument(
+        '--beta', nargs=1, default=[2.], type=float,
+        help='(Beta, Gamma)  (default: 2)')
+
 
     arg_lib.add_args(parser, 'io_out', 'example')
 
     # parse arguments
     args = parser.parse_args()
 
+    # set some defaults
+    args = fill_default_mu(args)
+
+    # get the samples
     df = get_samples(args)
-    print
-    print df.to_string()
-    sys.exit()
-
-
-
-
-    #parser.add_argument("-r", "--recs",
-    #                    help="the number of records to generate",
-    #                    nargs=1, default=[10], type=int)
-    #parser.add_argument("-c", "--cols",
-    #                    help="the number of columns to generate",
-    #                    nargs=1, default=[1], type=int)
-
-    #msg = 'Additional help example: p.rand normal --help'
-    #subparsers = parser.add_subparsers(dest='dist_name', help=msg)
-
-    ## add subparsers for each distribution based on TYPE_LIST info
-    #for t_rec in TYPE_LIST:
-    #    sub_p = subparsers.add_parser(t_rec['name'])
-    #    for p_rec in t_rec['param_list']:
-    #        sub_p.add_argument('--{}'.format(p_rec['name']),
-    #                           default=[p_rec['val']], nargs=1,
-    #                           metavar=str(p_rec['val']), type=float)
-
-    # parse arguments
-    args = parser.parse_args()
-
-    # get the relevant distribution-type record
-    t_rec = [r for r in TYPE_LIST if r['name'] == args.dist_name][0]
-
-    # create kwargs to pass to probability function
-    kwargs = {'size': (args.recs[0], args.cols[0])}
-    for p_rec in t_rec['param_list']:
-        kwargs[p_rec['name']] = args.__dict__[p_rec['name']][0]
-
-    # get the probbility function from numpy.random
-    prob_func = np.random.__dict__[args.dist_name]
-
-    col_names = ['c{}'.format(nn) for nn in range(args.cols[0])]
-    df = pd.DataFrame(prob_func(**kwargs), columns=col_names)
 
     # write dataframe to output
     io_lib.df_to_output(args, df)
 
-
 if __name__ == '__main__':  # pragma: no cover
-    print
-    print 'running main'
     main()
 

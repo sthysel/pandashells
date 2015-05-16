@@ -16,47 +16,11 @@ module_checker_lib.check_for_modules(['pandas', 'numpy'])
 import pandas as pd
 import numpy as np
 
-## this dict holds info on all valid distribution types
-#TYPE_LIST = [{
-#    'name': 'uniform',
-#    'param_list': [
-#        {'name': 'low', 'val': 0},
-#        {'name': 'high', 'val': 1}, ]},
-#    {
-#    'name': 'normal',
-#    'param_list': [
-#        {'name': 'loc', 'val': 0},
-#        {'name': 'scale', 'val': 1}]},
-#    {
-#    'name': 'binomial',
-#    'param_list': [
-#        {'name': 'n', 'val': 1},
-#        {'name': 'p', 'val': .5}]},
-#    {
-#    'name': 'beta',
-#    'param_list': [
-#        {'name': 'a', 'val': 1},
-#        {'name': 'b', 'val': 1},
-#    ],
-#    },
-#    {
-#    'name': 'gamma',
-#    'param_list': [
-#        {'name': 'shape', 'val': 1},
-#        {'name': 'scale', 'val': 1},
-#    ],
-#    },
-#    {
-#    'name': 'poisson',
-#    'param_list': [{'name': 'lam', 'val': 1}],
-#    },
-#    {
-#    'name': 'standard_t',
-#    'param_list': [{'name': 'df', 'val': 1}],
-#    }]
 
-
+# want different default mu values for normal and poisson distributions
 def fill_default_mu(args):
+    """
+    """
     if args.type[0] == 'normal':
         args.mu = [0.] if args.mu is None else args.mu
     elif args.type[0] == 'poisson':
@@ -64,8 +28,12 @@ def fill_default_mu(args):
     return args
 
 
-
 def get_samples(args):
+    """
+    Return samples from selected distribution
+    """
+
+    # dictionary to hold numpy arguments for different distributions
     distribution_for = {
         'uniform': {
             'function': np.random.uniform,
@@ -106,17 +74,31 @@ def get_samples(args):
                 'size': (args.num_samples[0], args.columns[0]),
             },
         },
+        'binomial': {
+            'function': np.random.binomial,
+            'kwargs': {
+                'n': args.N[0],
+                'p': args.p[0],
+                'size': (args.num_samples[0], args.columns[0]),
+            },
+        },
 
     }
 
+    # grab the function for generating proper distribution
     dist = distribution_for[args.type[0]]
+
+    # call the random generating function with the proper kwargs
     values = dist['function'](**dist['kwargs'])
+
+    # set column names of output dataframe 
     columns = ['c{}'.format(c) for c in range(args.columns[0])]
+
+    # framify and return results
     return pd.DataFrame(values, columns=columns)
 
 
 def main():
-    #TODO: write docs for this
     msg = textwrap.dedent(
     """
         Return random samples from common probability distrubtions.
@@ -134,7 +116,6 @@ def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
 
-    #options = {}
     parser.add_argument(
         '-t', '--type', nargs=1, type=str, default=['uniform'],
         choices=['uniform', 'normal', 'beta', 'gamma', 'binomial', 'poisson'],
@@ -150,6 +131,13 @@ def main():
         help=(
             '(Binomial Dist) Largest possible value for random variable. '
             '(default=10)'
+        )
+    )
+    parser.add_argument(
+        '--p', nargs=1, default=[.5], type=float,
+        help=(
+            '(Binomial Dist) Bernoulli probability for each trial'
+            '(default=.5)'
         )
     )
     parser.add_argument(
@@ -170,7 +158,6 @@ def main():
     parser.add_argument(
         '--beta', nargs=1, default=[2.], type=float,
         help='(Beta, Gamma)  (default: 2)')
-
 
     arg_lib.add_args(parser, 'io_out', 'example')
 

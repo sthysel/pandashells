@@ -1,20 +1,17 @@
 #! /usr/bin/env python
 
 # standard library imports
-import os
-import sys
+import sys  # NOQA import sys to allow for mocking sys.argv in tests
 import argparse
-import re
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib
 
 # import required dependencies
-modulesOkay = module_checker_lib.check_for_modules(['numpy', 'pandas'])
-if not modulesOkay:
-    sys.exit(1)
+module_checker_lib.check_for_modules(['numpy', 'pandas'])
 
 import numpy as np
 import pandas as pd
+
 
 def main():
     msg = "Generate a linearly spaced set of data points."
@@ -24,7 +21,7 @@ def main():
     msg += '[-o option [option ...]] [--example]'
     parser = argparse.ArgumentParser(description=msg, usage=msg)
 
-    arg_lib.addArgs(parser, 'io_out', 'example')
+    arg_lib.add_args(parser, 'io_out', 'example')
 
     msg = 'start end npoints'
     parser.add_argument("numbers", help=msg, type=int, nargs=3, metavar='')

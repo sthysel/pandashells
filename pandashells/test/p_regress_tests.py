@@ -40,7 +40,7 @@ class MainTests(TestCase):
     @patch('pandashells.bin.p_regress.pl.gcf')
     def test_cli_plots_osx(self,
             gcf_mock, backend_mock, df_from_input_mock, show_mock):
-        backend_mock.return_value = 'macosx'
+        backend_mock.lower = MagicMock(return_value = 'macosx')
         df_in = pd.DataFrame({
             'x': range(1, 101),
             'y': range(1, 101),

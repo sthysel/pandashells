@@ -1,12 +1,9 @@
 #! /usr/bin/env python
 
-
 # standard library imports
-import os
-import sys
 import argparse
 import textwrap
-import re
+import sys  # NOQA  importing sys so I can mock sys.argv in tests
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib
 
@@ -91,7 +88,7 @@ def get_samples(args):
     # call the random generating function with the proper kwargs
     values = dist['function'](**dist['kwargs'])
 
-    # set column names of output dataframe 
+    # set column names of output dataframe
     columns = ['c{}'.format(c) for c in range(args.columns[0])]
 
     # framify and return results
@@ -100,7 +97,7 @@ def get_samples(args):
 
 def main():
     msg = textwrap.dedent(
-    """
+        """
         Return random samples from common probability distrubtions.
 
         Examples:
@@ -110,7 +107,8 @@ def main():
             beta:     p.rand -n 1000 -t beta     --alpha=2  --beta=6  | p.hist
             gamma:    p.rand -n 1000 -t gamma    --alpha=1  --beta=1  | p.hist
             binomial: p.rand -n 1000 -t binomial --N=10     --p=0.4   | p.hist
-    """)
+        """
+    )
 
     # read command line arguments
     parser = argparse.ArgumentParser(
@@ -175,4 +173,3 @@ def main():
 
 if __name__ == '__main__':  # pragma: no cover
     main()
-

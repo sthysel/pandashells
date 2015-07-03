@@ -2,7 +2,7 @@
 from mock import patch, MagicMock
 from unittest import TestCase
 
-from pandashells.bin.p_rand import fill_default_mu, main
+from pandashells.bin.p_parallel import main
 
 
 class TestFillDefaultMu(TestCase):

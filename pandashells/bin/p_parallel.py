@@ -5,6 +5,7 @@ import argparse
 
 from pandashells.lib import parallel_lib, arg_lib
 
+
 def main():
     msg = "Tool to run shell commands in parallel.  Spawns processes "
     msg += "to concurrently run commands supplied on stdin. "
@@ -15,7 +16,7 @@ def main():
     msg = "The number of jobs to run in parallel. If not supplied, will "
     msg += "default to the number of detected cores."
     parser.add_argument('--njobs', '-n', dest='njobs', default=[None],
-                        nargs=1, type=int,  help=msg)
+                        nargs=1, type=int, help=msg)
     parser.add_argument("-v", "--verbose", action="store_true", default=False,
                         help="Enable verbose output")
 
@@ -28,7 +29,7 @@ def main():
                         nargs=1, help=msg)
 
     # add standard arg groups
-    arg_lib.addArgs(parser, 'example')
+    arg_lib.add_args(parser, 'example')
 
     # parse arguments
     args = parser.parse_args()

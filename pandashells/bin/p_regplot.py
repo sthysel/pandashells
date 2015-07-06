@@ -21,6 +21,24 @@ import seaborn as sns
 sns.set_context('talk')
 CC = mpl.rcParams['axes.color_cycle']
 
+def make_label(coeffs, savefig):
+    label_plain = 'y = '
+    for nn, coeff in enumerate(coeffs[::-1]):
+        if nn > 0:
+            label_plain += ' + '
+        if nn == 0:
+            label_plain += '(%0.4g)' % coeff
+        elif nn == 1:
+            label_plain += '(%0.4g) x' % coeff
+        else:
+            label_plain += '(%0.4g) x ^ %d' % (coeff, nn)
+    label_tex = '${}$'.format(label_plain)
+    label = label_tex
+    if savefig:
+        if re.compile(r'.*?\.html$').match(savefig[0]):
+            label = label_plain
+    return label
+
 def main():
     msg = 'Shows a quick single variable regression plot of specified order.'
 
@@ -60,21 +78,7 @@ def main():
     # do a polyfit with the specified order
     coeffs = np.polyfit(x, y, args.order[0])
 
-    label_plain = 'y = '
-    for nn, coeff in enumerate(coeffs[::-1]):
-        if nn > 0:
-            label_plain += ' + '
-        if nn == 0:
-            label_plain += '(%0.4g)' % coeff
-        elif nn == 1:
-            label_plain += '(%04g) x' % coeff
-        else:
-            label_plain += '(%0.4g) x ^ %d' % (coeff, nn)
-    label_tex = '${}$'.format(label_plain)
-    label = label_tex
-    if args.savefig:
-        if re.compile(r'.*?\.html$').match(args.savefig[0]):
-            label = label_plain
+    label = make_label(coeffs, args.savefig)
 
     sns.regplot(x, y, order=args.order[0], n_boot=args.n_boot[0],
             line_kws={'label': label, 'color': CC[2], 'alpha': .5},

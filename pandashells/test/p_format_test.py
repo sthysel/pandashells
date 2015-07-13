@@ -8,10 +8,11 @@ from unittest import TestCase
 import pandas as pd
 import numpy as np
 
-from pandashells.bin.p_sig_edit import (
+from pandashells.bin.p_format import (
     main,
 )
 
+want to use other kind of testing
 
 class MainUnitTest(TestCase):
     @patch('pandashells.bin.p_sig_edit.io_lib')

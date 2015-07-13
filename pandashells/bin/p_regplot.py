@@ -1,10 +1,9 @@
 #! /usr/bin/env python
 
 # standard library imports
-import os
-import sys
 import argparse
 import re
+import sys  # NOQA just use this for patching in tests
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 
@@ -13,13 +12,13 @@ module_checker_lib.check_for_modules(
     ['pandas', 'numpy', 'matplotlib', 'seaborn'])
 
 import numpy as np
-import pandas as pd
 import matplotlib as mpl
 import pylab as pl
 import seaborn as sns
 
 sns.set_context('talk')
 CC = mpl.rcParams['axes.color_cycle']
+
 
 def make_label(coeffs, savefig):
     label_plain = 'y = '
@@ -38,6 +37,7 @@ def make_label(coeffs, savefig):
         if re.compile(r'.*?\.html$').match(savefig[0]):
             label = label_plain
     return label
+
 
 def main():
     msg = 'Shows a quick single variable regression plot of specified order.'
@@ -80,9 +80,10 @@ def main():
 
     label = make_label(coeffs, args.savefig)
 
-    sns.regplot(x, y, order=args.order[0], n_boot=args.n_boot[0],
-            line_kws={'label': label, 'color': CC[2], 'alpha': .5},
-            scatter_kws={'alpha': args.alpha[0], 'color': CC[0]})
+    sns.regplot(
+        x, y, order=args.order[0], n_boot=args.n_boot[0],
+        line_kws={'label': label, 'color': CC[2], 'alpha': .5},
+        scatter_kws={'alpha': args.alpha[0], 'color': CC[0]})
 
     pl.legend(loc='best')
     pl.xlabel(args.x[0])

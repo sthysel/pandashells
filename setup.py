@@ -2,7 +2,6 @@
 
 import os
 from setuptools import setup, find_packages
-import glob
 
 fileDir = os.path.dirname(__file__)
 

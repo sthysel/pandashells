@@ -2,6 +2,7 @@
 
 # standard library imports
 import argparse
+import textwrap
 
 import sys  # NOQA  need this for mock testig
 
@@ -22,12 +23,30 @@ from statsmodels.distributions.empirical_distribution import ECDF
 
 
 def main():
-    msg = "Plot cumulative distribution of input column."
+    #msg = "Plot cumulative distribution of input column."
+
+    msg = textwrap.dedent(
+        """
+        Plots the emperical cumulative distribution function (ECDF).
+
+        -----------------------------------------------------------------------
+        Examples:
+
+            * Plot ECDF for 10k samples from the standard normal distribution.
+                p.rand -t normal -n 10000 | p.cdf -c c0
+
+            * Instead of plogging, send ECDF values to stdout
+                p.rand -t normal -n 10000 | p.cdf -c c0 -q | head
+
+
+        -----------------------------------------------------------------------
+        """
+    )
 
     # read command line arguments
-    parser = argparse.ArgumentParser(description=msg)
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
 
-    arg_lib.add_args(parser, 'io_in', 'io_out', 'example', 'decorating')
 
     # specify column to use
     parser.add_argument(
@@ -41,6 +60,7 @@ def main():
         help='Quiet mean no plots. Send numeric output to stdout instead')
 
     # parse arguments
+    arg_lib.add_args(parser, 'decorating', 'io_in', 'io_out',)
     args = parser.parse_args()
 
     # get the input dataframe and extract column

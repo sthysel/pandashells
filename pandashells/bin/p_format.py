@@ -6,7 +6,11 @@ import sys
 from pandashells.lib import arg_lib, io_lib
 
 
-class OutStream(object):
+class OutStream(object):  # pragma no cover
+    """
+    This class exisist for easing testing of sys.stdout and doesn't
+    need to be tested itself
+    """
     def __init__(self, template):
         self.template = template
 

@@ -35,10 +35,8 @@ def main():
             * Plot ECDF for 10k samples from the standard normal distribution.
                 p.rand -t normal -n 10000 | p.cdf -c c0
 
-            * Instead of plogging, send ECDF values to stdout
+            * Instead of plotting, send ECDF values to stdout
                 p.rand -t normal -n 10000 | p.cdf -c c0 -q | head
-
-
         -----------------------------------------------------------------------
         """
     )

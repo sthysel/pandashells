@@ -58,6 +58,9 @@ from dateutil.parser import parse  # noqa
 for (module, shortcut) in get_modules_and_shortcuts(sys.argv):
     exec('import {} as {}'.format(module, shortcut))
 
+#TODO: make sure you add to the help message somewhere that columns are still
+#      refered to as c0... cN
+
 #TODO: change how tests are done to remove this funiness
 # This branch is run in the integrations tests, but since it's being
 # run from a system call, coverage doesn't know about it.  I'm

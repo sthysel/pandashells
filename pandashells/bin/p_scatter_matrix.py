@@ -2,6 +2,7 @@
 
 # standard library imports
 import argparse
+import sys  # NOQA  need this for testing but not used in this code
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 

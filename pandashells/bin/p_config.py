@@ -13,11 +13,6 @@ def main():
     # --- read in the current configuration
     default_dict = config_lib.get_config()
 
-    msg = (
-        'Updates file ~/.pandashells, which hold pandashells configuration '
-        'information.'
-    )
-
     msg = textwrap.dedent(
         """
         Sets the default IO and plotting behavior for the pandashells toolset

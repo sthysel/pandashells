@@ -164,6 +164,8 @@ def main():  # pragma: no cover
         specific options available at the command line that govern the details
         of how these plots are rendered (e.g. --xlim, --legend, etc).
 
+    Make a note about how command should be enclosed in single quotes limiting python to doubles
+
 
 
 

@@ -96,6 +96,14 @@ def main():
     parser.add_argument('--sharey', action='store_true', dest='sharey',
                         default=False, help=msg)
 
+    msg = 'x axis limits when sharex=True'
+    parser.add_argument(
+        '--xlim', nargs=2, type=float, dest='xlim', metavar='xlim', help=msg)
+
+    msg = 'y axis limits when sharex=True'
+    parser.add_argument(
+        '--ylim', nargs=2, type=float, dest='ylim', metavar='ylim', help=msg)
+
     # parse arguments
     args = parser.parse_args()
 
@@ -110,6 +118,8 @@ def main():
         'size': args.size[0],
         'sharex': args.sharex,
         'sharey': args.sharey,
+        'xlim': args.xlim if args.xlim else None,
+        'ylim': args.ylim if args.ylim else None,
     }
     grid = sns.FacetGrid(df, **facet_grid_kwargs)
 

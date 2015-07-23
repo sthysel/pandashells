@@ -60,6 +60,8 @@ for (module, shortcut) in get_modules_and_shortcuts(sys.argv):
     exec('import {} as {}'.format(module, shortcut))
 
 
+#TODO: Make sure datetime is actually loaded into the namespace
+
 # TODO: change how tests are done to remove this funiness
 # This branch is run in the integrations tests, but since it's being
 # run from a system call, coverage doesn't know about it.  I'm

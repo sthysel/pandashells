@@ -2,7 +2,7 @@
 
 # standard library imports
 import os
-import sys
+import sys  # noqa
 import argparse
 
 import pandashells
@@ -22,7 +22,7 @@ def main():
     parser = argparse.ArgumentParser(description=msg)
 
     parser.add_argument(
-        '-d', '--dataset',  nargs=1, type=str,
+        '-d', '--dataset', nargs=1, type=str,
         dest='dataset', choices=sorted(f_dict.keys()), required=True,
         help='The name of the sample dataset')
 

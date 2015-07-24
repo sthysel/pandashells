@@ -6,6 +6,7 @@ import textwrap
 import os  # noqa
 import re  # noqa
 import sys  # noqa
+import datetime  # noqa
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib
 
@@ -59,6 +60,8 @@ from dateutil.parser import parse  # noqa
 for (module, shortcut) in get_modules_and_shortcuts(sys.argv):
     exec('import {} as {}'.format(module, shortcut))
 
+
+#TODO: Make sure datetime is actually loaded into the namespace
 
 # TODO: change how tests are done to remove this funiness
 # This branch is run in the integrations tests, but since it's being
@@ -144,6 +147,7 @@ def main():  # pragma: no cover
             pl = pylab
             parse = dateutil.parser.parse
             datetime = datetime
+            re = re
 
         When creating chains of dataframe operations (see examples), it is
         important to express your chain of operations before any options. This
@@ -181,8 +185,6 @@ def main():  # pragma: no cover
                 p.crypt  -d -i file.txt.crypt -o file_restored.txt
         -----------------------------------------------------------------------
         """)
-
-
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)

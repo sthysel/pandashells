@@ -48,8 +48,5 @@ def check_for_modules(module_list):
             msg += '-' * 60 + '\n'
             msg += "Missing module '{}'. To install use: \n".format(module)
             msg += "    {}\n\n".format(CMD_DICT[module])
+            print msg
             raise
-
-    # raise value error with message if bad modules found
-    if msg:
-        raise ImportError(msg)

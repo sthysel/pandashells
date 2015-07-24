@@ -6,6 +6,7 @@ import textwrap
 import os  # noqa
 import re  # noqa
 import sys  # noqa
+import datetime  # noqa
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib
 
@@ -146,6 +147,7 @@ def main():  # pragma: no cover
             pl = pylab
             parse = dateutil.parser.parse
             datetime = datetime
+            re = re
 
         When creating chains of dataframe operations (see examples), it is
         important to express your chain of operations before any options. This

@@ -25,6 +25,7 @@ CMD_DICT = {
 def check_for_modules(module_list):
     # make sure module_list only contains recognized modules
     unnamed_modules = set(module_list) - set(CMD_DICT.keys())
+    unnamed_modules = unnamed_modules - {'datetime', 're'}
     if unnamed_modules:
         msg = '\n\nThese modules unrecognized by check_for_modules(): '
         msg += '{}\n'.format(unnamed_modules)

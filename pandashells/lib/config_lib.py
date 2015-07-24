@@ -6,16 +6,33 @@ import json
 CONFIG_FILE_NAME = '.pandashells'
 
 # --- valid options  (option_name, [valid, option, list])
-CONFIG_OPTS = sorted([
-    ('io_input_type', ['csv', 'table']),
-    ('io_output_type', ['csv', 'table', 'html']),
-    ('io_input_header', ['header', 'noheader']),
-    ('io_output_header', ['header', 'noheader']),
-    ('io_output_index', ['noindex', 'index']),
-    ('io_output_na_rep', ['nan', 'NaN', '', '-']),
-    ('plot_context', ['talk', 'poster', 'paper', 'notebook']),
-    ('plot_theme', ['darkgrid', 'whitegrid', 'dark', 'white']),
-    ('plot_palette', ['muted', 'deep', 'dark', 'colorblind', 'pastel'])])
+CONFIG_OPTS = sorted(
+    [
+        ('io_input_type', ['csv', 'table']),
+        ('io_output_type', ['csv', 'table', 'html']),
+        ('io_input_header', ['header', 'noheader']),
+        ('io_output_header', ['header', 'noheader']),
+        ('io_output_index', ['noindex', 'index']),
+        ('io_output_na_rep', ['nan', 'NaN', '', '-']),
+        ('plot_context', ['talk', 'poster', 'paper', 'notebook']),
+        ('plot_theme', ['darkgrid', 'whitegrid', 'dark', 'white']),
+        ('plot_palette', ['muted', 'deep', 'dark', 'colorblind', 'pastel']),
+        ('plot_backend', [
+            'TkAgg',
+            'CocoaAgg',
+            'GTK',
+            'GTK3Cairo',
+            'GTKAgg',
+            'GTKCairo',
+            'MacOSX',
+            'Qt4Agg',
+            'WX',
+            'WXAgg'
+            'cairo',
+        ]),
+
+    ]
+)
 
 # --- create a dictionary out of the config options
 DEFAULT_DICT = {t[0]: t[1][0] for t in CONFIG_OPTS}

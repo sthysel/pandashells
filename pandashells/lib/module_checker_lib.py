@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import importlib
+from pandashells.lib import config_lib
 
 # --- define the default error message to show when a module can't be found
 HEADER = "\n\nThis tool requires packages that have not been installed.\n"
@@ -34,9 +35,13 @@ def check_for_modules(module_list):
     msg = ''
 
     # --- try importing all the required mojkdules
-    for module in module_list:
+    for module in sorted(module_list):
         try:
             importlib.import_module(module)
+            if module == 'matplotlib':
+                CONFIG = config_lib.get_config()
+                import matplotlib
+                matplotlib.use(CONFIG['plot_backend'])
         except ImportError:
             # --- add to error message for each bad module
             msg = msg if msg else HEADER

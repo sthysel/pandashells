@@ -20,15 +20,32 @@ sns.set_context('talk')
 def main():
     msg = textwrap.dedent(
         """
-        Creates faceted plots using seaborn's FacetGrid capability.
+        Creates faceted plots using seaborn FacetGrid.
 
+        With this tool, you can create a group of plots which show aspects
+        of the same dataset broken down in different ways.  See the seaborn
+        FacetGrid documentation for more detail.
 
-
+        The --map argument to this function specifies a function to use
+        for generating each of the plots.  The following modules are available
+        in the namespace:
+            pl = pylab
+            sns = seaborn
         -----------------------------------------------------------------------
         Examples:
 
-            * Example with tips
-                p.facet_grid --row sex --col meal --hue sex  --map pl.scatter --args x y --kwargs 'alpha=.1' 'bins=30
+            * Scatterplot of tips vs bill for different combinations of sex,
+              smoker, and day of the week:
+                    p.example_data -d tips | \\
+                    p.facet_grid --row smoker --col sex --hue day \\
+                    --map pl.scatter \\
+                    --args total_bill tip --kwargs 'alpha=.2' 's=100'
+
+            * Histogram of tips broken down by sex, smoker and day
+                    p.example_data -d tips | p.facet_grid --col day \\
+                    --row sex --hue smoker  --sharex --sharey --aspect 1 \\
+                    --map pl.hist --args tip \\
+                    --kwargs 'alpha=.2' 'range=[0, 10]' 'bins=20'
         -----------------------------------------------------------------------
         """
     )
@@ -71,7 +88,7 @@ def main():
         '--args', nargs='+', type=str, dest='args', metavar='args',
         required=True, help=msg)
 
-    msg = 'The keyword arguments to pass to the plotting function'
+    msg = 'Plotting function kwargs expressed as \'a=1\' \'b=2\' ... '
     parser.add_argument(
         '--kwargs', nargs='+', type=str, dest='kwargs',
         metavar='kwargs', help=msg)

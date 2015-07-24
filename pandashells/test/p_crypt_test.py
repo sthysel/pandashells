@@ -5,8 +5,6 @@ from unittest import TestCase
 
 from pandashells.bin.p_crypt import main
 
-#TODO: Mock out the add_args methods in failing tests to get them to pass
-
 
 class MainTests(TestCase):
 

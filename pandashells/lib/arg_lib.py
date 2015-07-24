@@ -33,17 +33,19 @@ def _io_in_adder(parser, config_dict, *args):
 
         # allow the option of supplying input column names
         msg = 'Overwrite input column names with this list'
-        group.add_argument('--names', nargs='+', type=str,
-                            dest='names', metavar="name",
-                            help=msg)
+        group.add_argument(
+            '--names', nargs='+', type=str, dest='names',
+            metavar="name", help=msg)
 
-        default_for_input = [config_dict['io_input_type'],
-                             config_dict['io_input_header']]
+        default_for_input = [
+            config_dict['io_input_type'],
+            config_dict['io_input_header']
+        ]
         msg = 'Must be one of {}'.format(repr(io_opt_list))
-        group.add_argument('-i', '--input_options', nargs='+',
-                            type=str, dest='input_options', metavar='option',
-                            default=default_for_input, choices=io_opt_list,
-                            help=msg)
+        group.add_argument(
+            '-i', '--input_options', nargs='+', type=str, dest='input_options',
+            metavar='option', default=default_for_input, choices=io_opt_list,
+            help=msg)
 
 
 def _io_out_adder(parser, config_dict, *args):
@@ -95,44 +97,44 @@ def _decorating_adder(parser, *args):
 
         group = parser.add_argument_group('Plot specific Options')
         msg = "Set the x-limits for the plot"
-        group.add_argument('--xlim', nargs=2, type=float, dest='xlim',
-                            metavar=('XMIN', 'XMAX'), help=msg)
+        group.add_argument(
+            '--xlim', nargs=2, type=float, dest='xlim',
+            metavar=('XMIN', 'XMAX'), help=msg)
         msg = "Set the y-limits for the plot"
-        group.add_argument('--ylim', nargs=2, type=float, dest='ylim',
-                            metavar=('YMIN', 'YMAX'), help=msg)
+        group.add_argument(
+            '--ylim', nargs=2, type=float, dest='ylim',
+            metavar=('YMIN', 'YMAX'), help=msg)
         msg = "Set the x-label for the plot"
-        group.add_argument('--xlabel', nargs=1, type=str, dest='xlabel',
-                            help=msg)
+        group.add_argument(
+            '--xlabel', nargs=1, type=str, dest='xlabel', help=msg)
         msg = "Set the y-label for the plot"
-        group.add_argument('--ylabel', nargs=1, type=str, dest='ylabel',
-                            help=msg)
+        group.add_argument(
+            '--ylabel', nargs=1, type=str, dest='ylabel', help=msg)
         msg = "Set the title for the plot"
-        group.add_argument('--title', nargs=1, type=str, dest='title',
-                            help=msg)
+        group.add_argument(
+            '--title', nargs=1, type=str, dest='title', help=msg)
         msg = "Specify legend location"
-        group.add_argument('--legend', nargs=1, type=str, dest='legend',
-                            choices=['1', '2', '3', '4', 'best'], help=msg)
+        group.add_argument(
+            '--legend', nargs=1, type=str, dest='legend',
+            choices=['1', '2', '3', '4', 'best'], help=msg)
         msg = "Specify whether hide the grid or not"
-        group.add_argument('--nogrid', action='store_true', dest='no_grid',
-                            default=False, help=msg)
+        group.add_argument(
+            '--nogrid', action='store_true', dest='no_grid', default=False,
+            help=msg)
         msg = "Specify plot context. Default = '{}' ".format(context_list[0])
-        group.add_argument('--context', nargs=1,
-                            type=str, dest='plot_context',
-                            default=[context_list[0]], choices=context_list,
-                            help=msg)
+        group.add_argument(
+            '--context', nargs=1, type=str, dest='plot_context',
+            default=[context_list[0]], choices=context_list, help=msg)
         msg = "Specify plot theme. Default = '{}' ".format(theme_list[0])
-        group.add_argument('--theme', nargs=1,
-                            type=str, dest='plot_theme',
-                            default=[theme_list[0]], choices=theme_list,
-                            help=msg)
+        group.add_argument(
+            '--theme', nargs=1, type=str, dest='plot_theme',
+            default=[theme_list[0]], choices=theme_list, help=msg)
         msg = "Specify plot palette. Default = '{}' ".format(palette_list[0])
-        group.add_argument('--palette', nargs=1,
-                            type=str, dest='plot_palette',
-                            default=[palette_list[0]], choices=palette_list,
-                            help=msg)
+        group.add_argument(
+            '--palette', nargs=1, type=str, dest='plot_palette',
+            default=[palette_list[0]], choices=palette_list, help=msg)
         msg = "Save the figure to this file"
-        group.add_argument('--savefig', nargs=1, type=str,
-                            help=msg)
+        group.add_argument('--savefig', nargs=1, type=str, help=msg)
 
 
 def _xy_adder(parser, *args):

@@ -84,7 +84,6 @@ class ArgLibTests(TestCase):
         """
         # set up mock parser
         parser = MagicMock()
-        #parser.add_argument = MagicMock()
         group = MagicMock()
         group.add_argument = MagicMock()
         parser.add_argument_group = MagicMock(return_value=group)
@@ -243,7 +242,6 @@ class ArgLibTests(TestCase):
 
         # make sure proper calls were made
         self.assertEqual(parser.add_argument.call_args_list, calls)
-
 
     @patch('pandashells.lib.arg_lib._xy_adder')
     @patch('pandashells.lib.arg_lib._decorating_adder')

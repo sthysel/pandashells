@@ -23,8 +23,6 @@ from statsmodels.distributions.empirical_distribution import ECDF
 
 
 def main():
-    #msg = "Plot cumulative distribution of input column."
-
     msg = textwrap.dedent(
         """
         Plots the emperical cumulative distribution function (ECDF).
@@ -44,7 +42,6 @@ def main():
     # read command line arguments
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
-
 
     # specify column to use
     parser.add_argument(

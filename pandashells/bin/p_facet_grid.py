@@ -2,7 +2,6 @@
 
 # standard library imports
 import argparse
-import re
 import sys  # NOQA just use this for patching in tests
 import textwrap
 
@@ -12,14 +11,11 @@ from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 module_checker_lib.check_for_modules(
     ['pandas', 'numpy', 'matplotlib', 'seaborn'])
 
-import numpy as np
 import matplotlib as mpl
-import pylab as pl
 import seaborn as sns
 
 sns.set_context('talk')
 CC = mpl.rcParams['axes.color_cycle']
-
 
 
 def main():
@@ -81,9 +77,6 @@ def main():
         '--kwargs', nargs='+', type=str, dest='kwargs',
         metavar='kwargs', help=msg)
 
-    #parser.add_argument(
-    #    '--sharex',  type=bool, dest='sharex', default
-    #    metavar='kwargs', help=msg)
     msg = 'Share x axis'
     parser.add_argument('--sharex', action='store_true', dest='sharex',
                         default=False, help=msg)
@@ -127,15 +120,10 @@ def main():
     for kwarg in args.kwargs:
         exec('map_kwargs.update(dict({}))'.format(kwarg))
 
-    grid.map(map_func, *map_args, **map_kwargs)
+    grid.map(map_func, *map_args, **map_kwargs)  # noqa  defined in exec above
     grid.add_legend()
     plot_lib.show(args)
 
 
-
-#seaborn.FacetGrid(data, row=None, col=None, hue=None, col_wrap=None, sharex=True, sharey=True, size=3, aspect=1,
-#                  palette=None, row_order=None, col_order=None, hue_order=None, hue_kws=None, dropna=True,
-#                  legend_out=True, despine=True, margin_titles=False, xlim=None, ylim=None, subplot_kws=None,
-#                  gridspec_kws=None)
 if __name__ == '__main__':  # pragma: no cover
     main()

@@ -11,11 +11,10 @@ from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 module_checker_lib.check_for_modules(
     ['pandas', 'numpy', 'matplotlib', 'seaborn'])
 
-import matplotlib as mpl
+import pylab as pl
 import seaborn as sns
 
 sns.set_context('talk')
-CC = mpl.rcParams['axes.color_cycle']
 
 
 def main():

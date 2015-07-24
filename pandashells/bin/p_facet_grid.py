@@ -6,10 +6,6 @@ import re
 import sys  # NOQA just use this for patching in tests
 import textwrap
 
-import matplotlib
-matplotlib.use('TKAgg')
-#matplotlib.use('MacOSX')
-
 from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 
 # import required dependencies

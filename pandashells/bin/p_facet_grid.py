@@ -116,8 +116,9 @@ def main():
     map_args = args.args
 
     map_kwargs = {}
-    for kwarg in args.kwargs:
-        exec('map_kwargs.update(dict({}))'.format(kwarg))
+    if args.kwargs:
+        for kwarg in args.kwargs:
+            exec('map_kwargs.update(dict({}))'.format(kwarg))
 
     grid.map(map_func, *map_args, **map_kwargs)  # noqa  defined in exec above
     grid.add_legend()

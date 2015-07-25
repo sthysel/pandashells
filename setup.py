@@ -32,6 +32,7 @@ setup(
             'p.format = pandashells.bin.p_format:main',
             'p.hist = pandashells.bin.p_hist:main',
             'p.linspace = pandashells.bin.p_linspace:main',
+            'p.lomb_scargle = pandashells.bin.p_lomb_scargle:main',
             'p.merge = pandashells.bin.p_merge:main',
             'p.parallel = pandashells.bin.p_parallel:main',
             'p.plot = pandashells.bin.p_plot:main',

@@ -51,8 +51,8 @@ def main():
 
     # fit the model and add fit, resid columns
     result = sm.ols(formula=args.model[0], data=df).fit()
-    df['_fit'] = result.fittedvalues
-    df['_resid'] = result.resid
+    df['fit_'] = result.fittedvalues
+    df['resid_'] = result.resid
 
     # add and output the fit results if requested
     if args.retfit:
@@ -66,13 +66,13 @@ def main():
     # do plots if requested
     if args.plot:
         pl.subplot(211)
-        pl.plot(df._fit, df._resid, '.', alpha=.5)
+        pl.plot(df.fit_, df.resid_, '.', alpha=.5)
         pl.xlabel('Fit')
         pl.ylabel('Residual')
         pl.title(args.model[0])
 
         pl.subplot(212)
-        sns.distplot(df._resid, bins=50)
+        sns.distplot(df.resid_, bins=50)
         pl.xlabel('Residual with R^2 = {:0.4f}'.format(result.rsquared))
         pl.ylabel('Counts')
 

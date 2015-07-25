@@ -10,6 +10,7 @@ HEADER += "installing them.\n\n"
 # define a dict to map a module name to its install command
 CMD_DICT = {
     'dateutil': 'pip install dateutil',
+    'gatspy': 'pip install gatspy',
     'matplotlib': 'conda install matplotlib',
     'mpld3': 'mpld3',
     'numpy': 'conda install numpy',

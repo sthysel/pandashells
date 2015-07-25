@@ -24,7 +24,7 @@ def _next_power_two(x):
 
 def _compute_pad(t, interp_exponent=0):
     """
-    Given a time series t, compute the zero padding.
+    Given a sorted time series t, compute the zero padding.
     The final padded arrays are the next power of two in length multiplied
     by 2 ** interp_exponent.
     returns t_pad and y_pad
@@ -33,12 +33,12 @@ def _compute_pad(t, interp_exponent=0):
     dt = (t_max - t_min) / float(n - 1)
     n_padded = _next_power_two(len(t)) << interp_exponent
     n_pad = n_padded - n
-    t_pad = np.linspace(t_max + dt, t_max + dt + (n_pad -1) * dt, n_pad)
+    t_pad = np.linspace(t_max + dt, t_max + dt + (n_pad - 1) * dt, n_pad)
     y_pad = np.zeros(len(t_pad))
     return t_pad, y_pad
 
 
-def compute_params(t):
+def _compute_params(t):
     """
     Takes a timeseries and computes the parameters needed for the fast
     lomb scargle algorithm in gatspy
@@ -49,14 +49,8 @@ def compute_params(t):
     d_freq = 1. / (2 * dt * len(t))
     return min_freq, d_freq, len(t)
 
-    #min_period = 2 * dt
-    #max_period = t_max - t_min
-    #min_freq = 1. / max_period
-    #max_freq = 1. / min_period
-    #return min_freq, df, len(t)
 
-
-def lomb_scargle(df, time_col, val_col, interp_exponent=0, period_order=True):
+def lomb_scargle(df, time_col, val_col, interp_exponent=0, freq_order=False):
     """
     :type df: pandas.DataFrame
     :param df: An input dataframe
@@ -70,9 +64,9 @@ def lomb_scargle(df, time_col, val_col, interp_exponent=0, period_order=True):
     :type interp_exp: int
     :param interp_exp: Interpolate the spectrum by this power of two
 
-    :type period_order: bool
-    :param period_order: If set to true (default) spectrum is returned ordered
-                         by period.  Otherwise, ordering is by frequency
+    :type freq_order: bool
+    :param freq_order: If set to True spectrum is returned in frequency order
+                       instead of period order (default=False)
 
 
 
@@ -100,21 +94,21 @@ def lomb_scargle(df, time_col, val_col, interp_exponent=0, period_order=True):
     model.fit(df.t.values, df.y.values, 1)
 
     # compute params for getting results out of lomb scargle fit
-    f0, df, N = compute_params(df.t.values)
+    f0, df, N = _compute_params(df.t.values)
     f = f0 + df * np.arange(N)
     p = 1. / f
 
     # retrieve the lomb scarge fit and normalize for power / amplitude
     yf = model.score_frequency_grid(f0, df, N)
-    yf_power =  2 * yf * E_in * len(yf) / float(pre_pad_length) ** 2
+    yf_power = 2 * yf * E_in * len(yf) / float(pre_pad_length) ** 2
     yf_amp = np.sqrt(yf_power)
 
     # generate the output dataframe
-    df =pd.DataFrame(
+    df = pd.DataFrame(
         {'freq': f, 'period': p, 'power': yf_power, 'amp': yf_amp}
     )[['period', 'freq', 'power', 'amp']]
 
     # order by period if desired
-    if period_order:
+    if not freq_order:
         df = df.sort_index(by='period')
     return df

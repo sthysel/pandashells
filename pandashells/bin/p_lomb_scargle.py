@@ -2,15 +2,34 @@
 
 # standard library imports
 import argparse
+import textwrap
+import sys  # noqa
 
-from pandashells.lib import arg_lib, io_lib, outlier_lib, lomb_scargle_lib
+from pandashells.lib import arg_lib, io_lib, lomb_scargle_lib
 
 
 def main():
-    msg = 'Need to write this'
+    msg = textwrap.dedent(
+        """
+        Computes a spectrogram using the lomb-scargle algorithm provided by
+        the gatspy module.  The input time series need not have evenly spaced
+        time-stamps.
+
+        -----------------------------------------------------------------------
+        Examples:
+
+            * Plot ECDF for 10k samples from the standard normal distribution.
+                p.rand -t normal -n 10000 | p.cdf -c c0
+
+            * Instead of plotting, send ECDF values to stdout
+                p.rand -t normal -n 10000 | p.cdf -c c0 -q | head
+        -----------------------------------------------------------------------
+        """
+    )
 
     # read command line arguments
-    parser = argparse.ArgumentParser(description=msg)
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
 
     arg_lib.add_args(parser, 'io_in', 'io_out')
 
@@ -33,7 +52,7 @@ def main():
     df = io_lib.df_from_input(args)
     df = lomb_scargle_lib.lomb_scargle(
         df, args.time_col[0], args.val_col[0], args.interp_exp[0],
-        not args.freq_order)
+        args.freq_order)
 
     # write dataframe to output
     io_lib.df_to_output(args, df)

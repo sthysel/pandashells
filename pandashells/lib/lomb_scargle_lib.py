@@ -76,7 +76,7 @@ def lomb_scargle(df, time_col, val_col, interp_exponent=0, freq_order=False):
     # only care about timestamped values
     df = df[[time_col, val_col]].dropna()
 
-    # standardize column names and remove mean from values
+    # standardize column names, remove mean from values, and sort by time
     df = df.rename(columns={time_col: 't', val_col: 'y'}).sort_index(by=['t'])
     df['y'] = df['y'] - df.y.mean()
 

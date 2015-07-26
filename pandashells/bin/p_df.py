@@ -60,8 +60,7 @@ from dateutil.parser import parse  # noqa
 for (module, shortcut) in get_modules_and_shortcuts(sys.argv):
     exec('import {} as {}'.format(module, shortcut))
 
-
-#TODO: Make sure datetime is actually loaded into the namespace
+#TODO  Figure out why dataframe plotting gets an extra "use"
 
 # TODO: change how tests are done to remove this funiness
 # This branch is run in the integrations tests, but since it's being
@@ -134,13 +133,24 @@ def main():  # pragma: no cover
         """
         Enables pandas dataframe processing at the unix command line.
 
-        This is the real workhorse of the pandashells toolkit.  It reads data from
-        stdin as a dataframe, which is passed through any number of pandas
+        This is the real workhorse of the pandashells toolkit.  It reads data
+        from stdin as a dataframe, which is passed through any number of pandas
         operations provided on the command line.  Output is always to stdout.
 
-        In addition to providing access to pandas dataframes, a number of modules
-        are loaded into the namespace so as to be accessible from the command line.
-        These modules are:
+        Each operation assumes data is in a dataframe named df.  Operations
+        performed on this dataframe will overwrite the df variable with
+        the results of that operation.  Special consideration is taken for
+        assignments such as df['a'] = df.b + df.c.  These are understood
+        to agument the input dataframe with a new column. By way of example,
+        this command:
+            p.df 'df.groupby(by="a").b.count()' 'df.reset_index()'
+        is equivalent to the python expressions:
+            df = df.groupby(by="a").b.count()
+            df = df.reset_index()
+
+        In addition to providing access to pandas dataframes, a number of
+        modules are loaded into the namespace so as to be accessible from the
+        command line.  These modules are:
             pd = pandas
             np = numpy
             scp = scipy
@@ -151,9 +161,9 @@ def main():  # pragma: no cover
 
         When creating chains of dataframe operations (see examples), it is
         important to express your chain of operations before any options. This
-        is because some options can take multiple arguments and the parser won't be
-        able to properly decode your meaning.
-        for example:
+        is because some options can take multiple arguments and the parser
+        won't be able to properly decode your meaning.
+        For example:
             cat file.csv | p.df 'df["x"] = df.y + 1' -o table noheader  # GOOD
             cat file.csv | p.df -o table noheader 'df["x"] = df.y + 1'  # BAD
 
@@ -168,21 +178,33 @@ def main():  # pragma: no cover
         specific options available at the command line that govern the details
         of how these plots are rendered (e.g. --xlim, --legend, etc).
 
-    Make a note about how command should be enclosed in single quotes limiting python to doubles
-
-
-
-
-
         -----------------------------------------------------------------------
         Examples:
 
-            * Encrypt an input file echoing the openssl command
-                echo 'plain text' > file.txt
-                p.crypt -i file.txt -v -o file.txt.crypt
+            * Print a csv file in nice tabular format
+                p.example_data -d tips | p.df -o table | head
 
-            * Decrypt an input file
-                p.crypt  -d -i file.txt.crypt -o file_restored.txt
+            * Select by row
+                p.example_data -d tips \\
+                | p.df 'df[df.sex=="Female"]' 'df[df.smoker=="Yes"]' -o table
+
+            * Extract columns
+                p.example_data -d tips \\
+                | p.df 'df[["total_bill", "tip"]].head()' -o table
+
+            * Perform grouped aggregations
+                p.example_data -d tips | p.df \\
+                'df.groupby(by=["sex", "smoker"]).tip.sum()' -o table index
+
+            * Use pandas plotting methods
+                p.example_data -d tips | p.df \\
+                'df.groupby(by="day").total_bill.sum().plot(kind="barh")'\\
+                --xlabel 'Dollars' --title 'Total Bills by Day'
+
+            * Convert between tabular and csv format with/without header rows
+                seq 10 | awk '{print $1, 2*$1}'\\
+                | p.df --names a b -i table noheader | p.df -o table noheader
+
         -----------------------------------------------------------------------
         """)
 

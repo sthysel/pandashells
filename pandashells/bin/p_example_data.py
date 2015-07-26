@@ -4,6 +4,7 @@
 import os
 import sys  # noqa
 import argparse
+import textwrap
 
 import pandashells
 
@@ -17,9 +18,33 @@ def main():
     for f in os.listdir(sample_data_dir):
         f_dict[f.replace('.csv', '')] = os.path.join(sample_data_dir, f)
 
-    # populate the arg parser with current configuration
-    msg = "Print sample data set to stdout"
-    parser = argparse.ArgumentParser(description=msg)
+    # read command line arguments
+        msg = textwrap.dedent(
+        """
+        Provides access to sample csv data sets for exploring the pandashells
+        toolkit.
+
+        -----------------------------------------------------------------------
+        Examples:
+
+        * Restaraunt tips along with patron information.
+             p.example_data -d tips | head
+
+        * Relative rise in global sea surface height over the past couple
+          decades.  Original source: http://sealevel.colorado.edu/
+             p.example_data -d sealevel | head
+
+        * Polling data for 2008 US presidential
+             p.example_data -d election | head
+
+        * US Electoral college and population numbers by state
+             p.example_data -d electoral_college | head
+        -----------------------------------------------------------------------
+        """
+    )
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
 
     parser.add_argument(
         '-d', '--dataset', nargs=1, type=str,

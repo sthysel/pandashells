@@ -5,6 +5,7 @@ import argparse
 
 from pandashells.lib import parallel_lib, arg_lib
 
+START ADDING EXAMPLES HERE
 
 def main():
     msg = "Tool to run shell commands in parallel.  Spawns processes "

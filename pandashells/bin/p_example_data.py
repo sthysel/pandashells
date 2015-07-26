@@ -19,7 +19,7 @@ def main():
         f_dict[f.replace('.csv', '')] = os.path.join(sample_data_dir, f)
 
     # read command line arguments
-        msg = textwrap.dedent(
+    msg = textwrap.dedent(
         """
         Provides access to sample csv data sets for exploring the pandashells
         toolkit.

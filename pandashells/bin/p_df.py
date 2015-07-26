@@ -206,7 +206,8 @@ def main():  # pragma: no cover
                 | p.df --names a b -i table noheader | p.df -o table noheader
 
         -----------------------------------------------------------------------
-        """)
+        """
+    )
 
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)

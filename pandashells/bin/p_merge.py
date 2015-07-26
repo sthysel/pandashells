@@ -11,6 +11,7 @@ module_checker_lib.check_for_modules(['pandas'])
 
 import pandas as pd
 
+CONTINUE ADDING EXAMPLES HERE
 
 def validate_args(args):
     # make sure join criteria are properly specified

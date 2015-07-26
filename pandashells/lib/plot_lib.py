@@ -2,7 +2,7 @@
 
 import sys
 import re
-
+#TODO add ability to add log scales to plots
 from pandashells.lib import module_checker_lib
 
 module_checker_lib.check_for_modules(

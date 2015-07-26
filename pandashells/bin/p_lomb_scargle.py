@@ -13,16 +13,28 @@ def main():
         """
         Computes a spectrogram using the lomb-scargle algorithm provided by
         the gatspy module.  The input time series need not have evenly spaced
-        time-stamps.
+        time-stamps.  The FFT-based algorithm has complexity O[N*log(N)].
 
         -----------------------------------------------------------------------
         Examples:
 
-            * Plot ECDF for 10k samples from the standard normal distribution.
-                p.rand -t normal -n 10000 | p.cdf -c c0
+            * Plot the spectrum of a simple sine wave
+                  p.linspace 0 10 100 \\
+                  | p.df 'df["value"] = 7 * np.sin(2*np.pi*df.time / 1.5)'\\
+                        --names time\\
+                  | p.lomb_scargle -t time -y value --interp_exp 3\\
+                  | p.plot -x period -y amp --xlim 0 3
 
-            * Instead of plotting, send ECDF values to stdout
-                p.rand -t normal -n 10000 | p.cdf -c c0 -q | head
+            * Show the annual and 59-day peaks in the sealevel spectrum
+                p.example_data -d sealevel\\
+                | p.df 'df["day"] = 365.25 * df.year'\\
+                        'df["day"] = df.day - df.day.iloc[0]'\\
+                | p.lomb_scargle -t day -y sealevel_mm --interp_exp 3\\
+                | p.df 'df[df.period < 720]'\\
+                | p.plot -x period -y amp --xlim 1 400\\
+                         --title 'Sea-surface height spectrum'\\
+                         --xlabel 'period (days)'
+
         -----------------------------------------------------------------------
         """
     )

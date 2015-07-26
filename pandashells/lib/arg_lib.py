@@ -104,6 +104,14 @@ def _decorating_adder(parser, *args):
         group.add_argument(
             '--ylim', nargs=2, type=float, dest='ylim',
             metavar=('YMIN', 'YMAX'), help=msg)
+        msg = "Draw x axis with log scale"
+        group.add_argument(
+            '--xlog', action='store_true', dest='xlog', default=False,
+            help=msg)
+        msg = "Draw y axis with log scale"
+        group.add_argument(
+            '--ylog', action='store_true', dest='ylog', default=False,
+            help=msg)
         msg = "Set the x-label for the plot"
         group.add_argument(
             '--xlabel', nargs=1, type=str, dest='xlabel', help=msg)

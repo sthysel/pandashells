@@ -2,7 +2,6 @@
 
 import sys
 import re
-#TODO add ability to add log scales to plots
 from pandashells.lib import module_checker_lib
 
 module_checker_lib.check_for_modules(
@@ -51,6 +50,13 @@ def set_limits(args):
         pl.gca().set_xlim(args.xlim)
     if args.ylim:
         pl.gca().set_ylim(args.ylim)
+
+
+def set_scale(args):
+    if args.xlog:
+        pl.gca().set_xscale('log')
+    if args.ylog:
+        pl.gca().set_yscale('log')
 
 
 def set_labels_title(args):
@@ -128,6 +134,7 @@ def draw_traces(args, df):
 
 def refine_plot(args):
     set_limits(args)
+    set_scale(args)
     set_labels_title(args)
     set_grid(args)
     set_legend(args)

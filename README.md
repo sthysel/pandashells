@@ -120,12 +120,12 @@ Each operation assumes data is in a dataframe named df.  Operations
 performed on this dataframe will overwrite the df variable with
 the results of that operation.  Special consideration is taken for
 assignments such as df['a'] = df.b + 1.  These are understood
-to agument the input dataframe with a new column. By way of example,
+to augment the input dataframe with a new column. By way of example,
 this command:
    <pre><code> p.df 'df.groupby(by="a").b.count()' 'df.reset_index()' </code></pre>
-is equivalent to the code:
+is equivalent to the python expressions:
 <pre><code>
-    # this code in a python script 
+    # this 
     df = df.groupby(by="a").b.count()
     df = df.reset_index()
 </pre></code>

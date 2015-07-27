@@ -52,7 +52,7 @@ Developement branch
 Requirements
 ----
 
-Pandashells is both python2 and python3 compatible and was built using the 
+Pandashells is both Python2 and Python3 compatible and was developed using the 
 <a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>.
 We strongly recommend using Anaconda to run Pandashells.  Most of the libraries required by
 pandashells come pre-installed with Anaconda, though some tools will require additional

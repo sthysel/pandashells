@@ -3,7 +3,7 @@ PandaShells
 
 Introduction
 ---
-For decades, system administrators, devops engineeirs and data analysts have been
+For decades, system administrators, dev-ops engineeirs and data analysts have been
 piping textual data between unix tools such as grep, awk, sed, etc.  Chaining these
 tools together provides an extremely powerful workflow.
 
@@ -100,7 +100,7 @@ Tool | Purpose
 --- | ---
 p.cdf | Plot emperical distribution function
 p.config | Set default pandashells configuration options
-p.crypt | Encrypt/Decrypt files using open-ssl tools
+p.crypt | Encrypt/Decrypt files using open-ssl
 p.df | Pandas dataframe manipulation of text files
 p.example_data | Create sample csv files for training / testing
 p.facet_grid | Create faceted plots for data exploration

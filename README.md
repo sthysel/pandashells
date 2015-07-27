@@ -158,7 +158,7 @@ Visualization Tools
   
   <pre><code><strong>[~]$ paste &lt(p.rand -t normal -n 10000 | p.df --names normal) &lt(p.rand -t gamma -n 10000 | p.df --names gamma) | p.hist -i table -c normal gamma</strong> 
   </code></pre>
-  ![Output Image](/images/facet_plot.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/hist.png?raw=true "Bar chart of gender tipper counts.")
 
 
 List of Tools

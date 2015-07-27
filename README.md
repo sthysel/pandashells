@@ -134,13 +134,6 @@ DataFrame Maniuplations
          Thur  2.980333
   </code></pre>
 
-* If you have an appropriate backend specified for matplotlib (this should be configured out of the box for the 
-  <a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>)
-  the following command should pop open a window with a zoom/pan enabled version of the graph below.
-  <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.sex.value_counts()' 'df.rename(columns={0:"count"})' 'df.plot(kind="barh")'</strong> 
-  </code></pre>
-  ![Output Image](/images/gender_bar.png?raw=true "Bar chart of gender tipper counts.")
-
 
 Visualization Tools
 ----

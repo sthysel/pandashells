@@ -153,7 +153,7 @@ Visualization Tools
 * Plot tip vs total bill.
   <pre><code><strong>[~]$ p.example_data -d tips | p.plot -x total_bill -y tip -s 'o' --title 'Tip Vs Bill'</strong> 
   </code></pre>
-  ![Output Image](/images/tip_vs_bill.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/tips_vs_bill.png?raw=true "Bar chart of gender tipper counts.")
 
 
 List of Tools

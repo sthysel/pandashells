@@ -198,6 +198,7 @@ linear regression.
 
 * Full Linear Regression
   <pre><code><strong>[~]$p.example_data -d sealevel | p.regress -m 'sealevel_mm ~ year' </strong> 
+
                               OLS Regression Results
   ==============================================================================
   Dep. Variable:            sealevel_mm   R-squared:                       0.936

@@ -40,12 +40,15 @@ def main():
     arg_lib.add_args(parser, 'io_out', 'example')
 
     msg = 'start end npoints'
-    parser.add_argument("numbers", help=msg, type=float, nargs=3, metavar='')
+    parser.add_argument("numbers", help=msg, type=str, nargs=3, metavar='')
 
     # parse arguments
     args = parser.parse_args()
+    min_val, max_val, N = float(args.numbers[0]), float(args.numbers[1]), int(args.numbers[2])
+    #args.numbers = [float(num) for num in args.numbers]
 
-    df = pd.DataFrame({'c0': np.linspace(*args.numbers)})
+    df = pd.DataFrame({'c0': np.linspace(min_val, max_val, N)})
+    #df = pd.DataFrame({'c0': np.linspace(*args.numbers)})
 
     # write dataframe to output
     io_lib.df_to_output(args, df)

@@ -186,4 +186,12 @@ along with the command used to generate them.
   </code></pre>
   ![Output Image](/images/hist.png?raw=true "Bar chart of gender tipper counts.")
 
+Linear Regression
+----
+
+* Quick and dirty fit to a line
+  <pre><code><strong>[~]$ p.linspace 0 10 20 | p.df 'df["y_true"] = .2 * df.x' 'df["noise"] = np.random.randn(20)' 'df["y"] = df.y_true + df.noise' --names x | p.regplot -x x -y y</strong> 
+  </code></pre>
+  ![Output Image](/images/regplot.png?raw=true "Bar chart of gender tipper counts.")
+
 

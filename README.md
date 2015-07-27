@@ -34,7 +34,7 @@ If you work with data using Python, you have almost certainly encountered
 <a href="http://statsmodels.sourceforge.net/">Statsmodels</a> and
 <a href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a>.
 
-Pandashells opens up a bash api, if you will, into the python data stack with command syntax
+Pandashells opens up a bash API into the python data stack with command syntax
 closely mirroring the underlying libraries on which it is built.  This should
 allow those familiar with the python data stack to be immediately productive.
 

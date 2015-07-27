@@ -161,6 +161,13 @@ DataFrame Maniuplations
 
 Visualization Tools
 ----
+Pandashells provides a number of visualization tools to help you quickly explore your data.
+All visualizations are automatically configured to show an interactive plot using the configured
+backend (default is TkAgg, but can be configured with the p.configure tool).  
+
+The visualization can also be saved to image files (e.g. .png) or rendered to html.  The html
+generated can either be opened directly in the browser to show an interactive plot (using mpld3),
+or can be embedded in an existing html file.
 
 * Simple xy scatter plots
   <pre><code><strong>[~]$ p.example_data -d tips | p.plot -x total_bill -y tip -s 'o' --title 'Tip Vs Bill'</strong> 

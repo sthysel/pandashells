@@ -173,18 +173,18 @@ along with the command used to generate them.
 * Simple xy scatter plots
   <pre><code><strong>[~]$ p.example_data -d tips | p.plot -x total_bill -y tip -s 'o' --title 'Tip Vs Bill'</strong> 
   </code></pre>
-  ![Output Image](/images/tips_vs_bill.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/tips_vs_bill.png?raw=true "xy scatter plot")
 
 * Faceted plots
   <pre><code><strong>[~]$ p.example_data -d tips | p.facet_grid --row smoker --col sex --hue day --map pl.scatter --args total_bill tip --kwargs 'alpha=.2' 's=100'</strong> 
   </code></pre>
-  ![Output Image](/images/facet_plot.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/facet_plot.png?raw=true "facet plot")
 
 * Histograms  (Note the use of bash <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> to paste two outputs together.)
   
   <pre><code><strong>[~]$ paste &lt(p.rand -t normal -n 10000 | p.df --names normal) &lt(p.rand -t gamma -n 10000 | p.df --names gamma) | p.hist -i table -c normal gamma</strong> 
   </code></pre>
-  ![Output Image](/images/hist.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/hist.png?raw=true "histogram plot")
 
 Linear Regression
 ----
@@ -194,7 +194,17 @@ linear regression.
 * Quick and dirty fit to a line
   <pre><code><strong>[~]$ p.linspace 0 10 20 | p.df 'df["y_true"] = .2 * df.x' 'df["noise"] = np.random.randn(20)' 'df["y"] = df.y_true + df.noise' --names x | p.regplot -x x -y y</strong> 
   </code></pre>
-  ![Output Image](/images/regplot.png?raw=true "Bar chart of gender tipper counts.")
+  ![Output Image](/images/regplot.png?raw=true "regplot plot")
+
+* Spectrum of a (non-uniformly sampled) time series.
+  <pre><code><strong>[~]$ p.example_data -d sealevel | p.plot -x year -y sealevel_mm</strong> 
+  </code></pre>
+  ![Output Image](/images/timeseries.png?raw=true "time series plot")
+
+  <pre><code><strong>[~]$ p.example_data -d sealevel | p.lomb_scargle -t year -y sealevel_mm --interp_exp 3 | p.plot -x period -y amp --xlim 0 1.5 --ylim 0 6.5 --xlabel 'Period years' --ylabel 'Amplitude (mm)' --title 'Global Sea Surface Height Spectrum'</strong> 
+  </code></pre>
+  ![Output Image](/images/spectrum.png?raw=true "spectrum plot")
+
 
 * Full Linear Regression
   <pre><code><strong>[~]$p.example_data -d sealevel | p.regress -m 'sealevel_mm ~ year' </strong> 

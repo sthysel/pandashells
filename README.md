@@ -3,7 +3,7 @@ Pandashells
 
 Introduction
 ---
-For decades, system administrators, dev-ops engineeirs and data analysts have been
+For decades, system administrators, dev-ops engineers and data analysts have been
 piping textual data between unix tools such as grep, awk, sed, etc.  Chaining these
 tools together provides an extremely powerful workflow.
 

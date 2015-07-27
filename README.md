@@ -1,13 +1,28 @@
 PandaShells                           
 ===
 
+Introduction
+---
+For decades, system administrators, devops engineeirs and data analysts have been
+piping textual data between unix tools such as grep, awk, sed, etc.  Chaining these
+tools together provides an extremely powerful workflow.
+
+The more recent emergence of the "data-scientist" has resulted in the increasing
+popularity of tools like R, Pandas, IPython, etc.  These tools have amazing power
+for transforming, analyzing and visualizing data-sets in ways that grep, awk,
+sed, and even the dreaded perl-one-liner could never accomplish.
+
+Pandashells is an attempt to marry the expressive, concise workflow of the shell pipeline
+with the statistical and visualization tools of the python data-stack.
+
+
 What is PandaShells?
 ----
 * A set of command-line tools for working with tabular data
 * Easily read/write data in CSV, or space delimited formats
 * Quickly aggregate, join, and summarize tabular data 
 * Compute descriptive statistics
-* Perform regression and classification 
+* Perform spectral decomposition and linear regression
 * Create data visualizations that can be saved to images or rendered interactively using 
   either a native backend or html.
 * Designed to be used with unix pipes for easy integration with awk, grep, sed, etc.
@@ -24,58 +39,52 @@ If you work with data using Python, you have almost certainly encountered
 <a href="http://www.scipy.org/">SciPy</a>, 
 <a href="http://matplotlib.org/">Matplotlib</a>, 
 <a href="http://statsmodels.sourceforge.net/">Statsmodels</a> and
-<a href="http://scikit-learn.org/stable/">scikit-learn</a>.
+<a href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and
 
-The capabilities these tools provide, especially within the
-<a href="http://ipython.org/notebook.html">IPython Notebook</a>
-environment is really hard to beat.  But sometimes you just need to get 
-old-school and shell out.  
+Pandashells brings commonly used features of these libraries to the bash prompt.
 
-The unix way of piping data between simple, expressive tools is incredibly powerful
-and can give you a substantial productivity boost.  Unfortunately, tools like
-awk, grep, sed, and even the dreaded perl-one-liner don't have the power or
-expressiveness that the python data stack provides.
-
-PandaShells is an effort to bring the power of the python data stack to the 
-shell prompt.  It essentially exposes a command-line API to the incredibly
-powerful suite of data tools that exist in the python community.  The authors
-of these amazing tools (see dependencies below) are greatfully acknowledged.
-
-<strong>PandaShells is still very much in alpha.
-The commands and syntax are rapidly evolving and tests/documentation are
-substantially lagging the development.
-</strong>
 
 Installation
 ----
 <pre><code><strong>[~]$ pip install --upgrade  git+https://github.com/robdmc/pandashells.git
 </code></pre>
 
-Dependencies
+Requirements
 ----
-PandaShells relies heavily on third-party python packages.  Using the
-<a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>
-will provide most of the dependencies you need to use the pandaShells tools.  Some of the
-tools will require additional packages.  If this is the case, attempting to run a command
-will raise an error and make a suggestion on how to install the missing package.  This is 
-done on a tool-by-tool basis because some packages are only required for a small subset of
-tools and there is no sense installing them if those few tools are not needed. Below is a
-comprehensive list of the packages used in the tool set.
-* numpy
-* scipy
+Pandashells was built using the 
+<a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>, and
+we strongly recommend using it to run Pandashells.  Most of the libraries required by
+pandashells come pre-installed with Anaconda, though some tools will require additional
+libraries.
+
+There is no requirements.txt file with pandashells because some of the tools only require
+the standard library, and there's no sense installing unnecessary packages if you only want
+to use that subset of tools.  If a particular tool encounters a missing dependency, it will
+gracefully fail with an informative message detailing the steps required for installing
+the missing dependency.
+
+Below is a comprehensive list of the packages used in the toolset.
+* gatspy
 * matplotlib
-* pandas
-* statsmodels
-* seaborn
 * mpld3
-* requests
-* toolz
+* numpy
+* pandas
+* scipy
+* seaborn
+* statsmodels
 
 Examples
 ----
 The pandaShells command syntax attempts to replicate as closely as possible the
 structure of the underlying library.  This should allow those familiar with the
-python data stack to be immediately productive.  Most the the examples shown here
+python data stack to be immediately productive.
+
+
+
+
+
+
+Most the the examples shown here
 make use of the p.df command.  This command provides pandas dataframe capability.
 If the syntax is unfamiliar to you, you are encouraged to review the
 <a href="http://pandas.pydata.org/pandas-docs/stable/">Pandas documentation</a>.

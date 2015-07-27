@@ -40,7 +40,7 @@ def main():
     arg_lib.add_args(parser, 'io_out', 'example')
 
     msg = 'start end npoints'
-    parser.add_argument("numbers", help=msg, type=int, nargs=3, metavar='')
+    parser.add_argument("numbers", help=msg, type=float, nargs=3, metavar='')
 
     # parse arguments
     args = parser.parse_args()

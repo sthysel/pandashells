@@ -1,4 +1,4 @@
-PandaShells                           
+Pandashells                           
 ===
 
 Introduction
@@ -16,7 +16,7 @@ Pandashells is an attempt to marry the expressive, concise workflow of the shell
 with the statistical and visualization tools of the python data-stack.
 
 
-What is PandaShells?
+What is Pandashells?
 ----
 * A set of command-line tools for working with tabular data
 * Easily read/write data in CSV, or space delimited formats
@@ -42,7 +42,7 @@ allow those familiar with the python data stack to be immediately productive.
 Installation
 ----
 Latest release branch
-<pre><code><strong>[~]$ pip install pandashells
+<pre><code><strong>[~]$ pip install Pandashells
 </strong></code></pre>
 
 Developement branch
@@ -78,10 +78,10 @@ Below is a comprehensive list of the packages used in the toolset.
 Overview
 ----
 
-* All pandaShells executables begin with a "p."  This is designed to work
+* All Pandashells executables begin with a "p."  This is designed to work
   nicely with the bash-completion feature.  If you can't remember the exact
   name of a command, simply typing p.[tab] will show you a complete list of
-  all pandaShells commands.
+  all Pandashells commands.
 
 * Every command can be run with a -h option to view help.  Each of these
   help messages will contain multiple examples of how to proerly use the tool.
@@ -96,7 +96,7 @@ Overview
 Tool | Purpose
 --- | ---
 p.cdf | Plot emperical distribution function
-p.config | Set default pandashells configuration options
+p.config | Set default Pandashells configuration options
 p.crypt | Encrypt/decrypt files using open-ssl
 p.df | Pandas dataframe manipulation of text files
 p.example_data | Create sample csv files for training/testing
@@ -167,7 +167,7 @@ backend (default is TkAgg, but can be configured with the p.config tool).
 
 The visualizations can also be saved to image files (e.g. .png) or rendered to html.  The html
 generated can either be opened directly in the browser to show an interactive plot (using mpld3),
-or can be embedded in an existing html file.  The examples below show pandashells-created png images
+or can be embedded in an existing html file.  The examples below show Pandashells-created png images
 along with the command used to generate them.
 
 * Simple xy scatter plots

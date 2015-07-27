@@ -180,13 +180,13 @@ along with the command used to generate them.
   </code></pre>
   ![Output Image](/images/facet_plot.png?raw=true "facet plot")
 
-* Histograms  (Note the use of bash <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> to paste two outputs together.)
+* Histograms plots  (Note the use of bash <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> to paste two outputs together.)
   
   <pre><code><strong>[~]$ paste &lt(p.rand -t normal -n 10000 | p.df --names normal) &lt(p.rand -t gamma -n 10000 | p.df --names gamma) | p.hist -i table -c normal gamma</strong> 
   </code></pre>
   ![Output Image](/images/hist.png?raw=true "histogram plot")
 
-* Emperical cumulative distribution functions
+* Empirical Cumulative distribution plots
   
   <pre><code><strong>[~]$ p.rand -t normal -n 500 | p.cdf -c value --names value</strong> 
   </code></pre>

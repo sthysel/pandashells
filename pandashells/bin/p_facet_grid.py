@@ -109,6 +109,9 @@ def main():
     parser.add_argument(
         '--ylim', nargs=2, type=float, dest='ylim', metavar='ylim', help=msg)
 
+    msg = "Save the figure to this file"
+    parser.add_argument('--savefig', nargs=1, type=str, help=msg)
+
     # parse arguments
     args = parser.parse_args()
 

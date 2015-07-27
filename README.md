@@ -129,7 +129,6 @@ df = df.groupby(by="a").b.count()
 df = df.reset_index()
 </pre></code>
 
-
 * Show a few rows of an example data set.
   <pre><code><strong>[~]$ p.example_data -d tips | head</strong>
 "total_bill","tip","sex","smoker","day","time","size"
@@ -147,7 +146,7 @@ df = df.reset_index()
        21.01  3.50    Male     No  Sun  Dinner     3
        23.68  3.31    Male     No  Sun  Dinner     2
        24.59  3.61  Female     No  Sun  Dinner     4
-    </code></pre>
+ </code></pre>
 
 * Compute statistics for numerical fields in the data set.
   <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.describe().T' -o table index </strong>

@@ -157,7 +157,34 @@ DataFrame Maniuplations
          Thur  2.980333
   </code></pre>
 
+* Joining files based on keys (based on pandas merge)
+  <pre><code>
+  <strong>
+  [~]$ # show poll resultes for the 2008 election
+  [~]$ p.example_data -d election | p.df -o table | head </strong> 
+       state  obama  mccain                           poll
+       -305    OH     43      50                      SurveyUSA
+       -303    PA     38      46                      Rasmussen
+       -298    OR     47      47                      SurveyUSA
+       -298    WA     52      43                      SurveyUSA
+       -294    AL     29      63                      SurveyUSA
+       -294    NY     44      42                    Siena Coll.
+       -294    VA     40      52                      SurveyUSA
+       -290    NM     41      50                      SurveyUSA
+       -290    NY     49      43                      SurveyUSA
 
+  [~]$ # show population and electoral college numbers for states
+  [~]$ p.example_data -d electoral_college | p.df -o table | head</strong> 
+       state            name  electors  population
+          AK          Alaska         3      710000
+          AL         Alabama         9     4780000
+          AR        Arkansas         6     2916000
+          AZ         Arizona        11     6392000
+          CA      California        55    37254000
+          CO        Colorado         9     5029000
+          CT     Connecticut         7     3574000
+          DC   Dist. of Col.         3      602000
+          DE        Delaware         3      898000
 Visualization Tools
 ----
 Pandashells provides a number of visualization tools to help you quickly explore your data.

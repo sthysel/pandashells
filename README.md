@@ -41,9 +41,13 @@ allow those familiar with the python data stack to be immediately productive.
 
 Installation
 ----
-<pre><code><strong>[~]$ pip install --upgrade  git+https://github.com/robdmc/pandashells.git
+Latest release branch
+<pre><code><strong>[~]$ pip install pandashells
 </strong></code></pre>
 
+Developement branch
+<pre><code><strong>[~]$ pip install --upgrade  git+https://github.com/robdmc/pandashells.git
+</strong></code></pre>
 
 Requirements
 ----

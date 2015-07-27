@@ -165,9 +165,10 @@ Pandashells provides a number of visualization tools to help you quickly explore
 All visualizations are automatically configured to show an interactive plot using the configured
 backend (default is TkAgg, but can be configured with the p.configure tool).  
 
-The visualization can also be saved to image files (e.g. .png) or rendered to html.  The html
+The visualizations can also be saved to image files (e.g. .png) or rendered to html.  The html
 generated can either be opened directly in the browser to show an interactive plot (using mpld3),
-or can be embedded in an existing html file.
+or can be embedded in an existing html file.  The examples below show pandashells-created png images
+along with the command used to generate them.
 
 * Simple xy scatter plots
   <pre><code><strong>[~]$ p.example_data -d tips | p.plot -x total_bill -y tip -s 'o' --title 'Tip Vs Bill'</strong> 

@@ -186,6 +186,12 @@ along with the command used to generate them.
   </code></pre>
   ![Output Image](/images/hist.png?raw=true "histogram plot")
 
+* Emperical cumulative distribution functions
+  
+  <pre><code><strong>[~]$ p.rand -t normal -n 500 | p.cdf -c value --names value</strong> 
+  </code></pre>
+  ![Output Image](/images/cdf_plot.png?raw=true "histogram plot")
+
 Linear Regression
 ----
 Pandashells leverages the excellent Seaborn and Statsmodels libraries to handle

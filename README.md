@@ -78,7 +78,7 @@ Below is a comprehensive list of the packages used in the toolset.
 * statsmodels
 
 
-General properties
+Overview
 ----
 
 * All pandaShells executables begin with a "p."  This is designed to work
@@ -94,6 +94,27 @@ General properties
   documentation.
   <pre><code><strong>[~]$ p.example_data -h</strong></code></pre>
   
+* Tool Description
+Existing Tool | Purpose
+--- | ---
+p.cdf | Plot emperical distribution function
+p.config | Set default pandashells configuration options
+p.crypt | Encrypt/Decrypt files using open-ssl tools
+p.df | Pandas dataframe manipulation of text files
+p.example_data | Create sample csv files for training / testing
+p.facet_grid | Create faceted plots for data exploration
+p.format | Render python string templates using input data
+p.hist | Plot histograms
+p.linspace | Generate a linearly spaced series of numbers
+p.lomb_scargle | Generate Lomb-Scarge spectrogram of input time series
+p.merge | Merge two data files by specifying join keys
+p.parallel | Read shell commands from stdin and run them in parallel
+p.plot | Create xy plot visualizations
+p.rand | Generate random numbers
+p.regplot | Quickly plot linear regression of data to a polynomial
+p.regress | Perform (multi-variate) linear regression
+p.sig_edit | Remove outliers using iterative sigma-editing
+
 
 
 DataFrame Maniuplations

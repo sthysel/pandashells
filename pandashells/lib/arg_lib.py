@@ -150,16 +150,17 @@ def _xy_adder(parser, *args):
     if 'xy_plotting' in in_arg_set:
 
         msg = 'Column to plot on x-axis'
-        parser.add_argument('-x', nargs=1, type=str, dest='x', metavar='col',
-                            help=msg)
+        parser.add_argument(
+            '-x', nargs=1, type=str, dest='x', metavar='col', help=msg)
 
         msg = 'List of columns to plot on y-axis'
-        parser.add_argument('-y', nargs='+', type=str, dest='y',
-                            metavar='col', help=msg)
+        parser.add_argument(
+            '-y', nargs='+', type=str, dest='y', metavar='col', help=msg)
 
-        msg = "Plot style defaults to .-"
-        parser.add_argument('-s', '--style', nargs=1, type=str, dest='style',
-                            default=['.-'], help=msg)
+        msg = "Plot style(s) defaults to .-"
+        parser.add_argument(
+            '-s', '--style', nargs='+', type=str, dest='style', default=['.-'],
+            help=msg, metavar='style')
 
 
 def add_args(parser, *args):

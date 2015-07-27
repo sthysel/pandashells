@@ -18,7 +18,8 @@ def main():
     arg_lib.add_args(parser, 'io_in', 'xy_plotting', 'decorating', 'example')
 
     parser.add_argument(
-        "-a", "--alpha", help="Set opacity", nargs=1, default=[1.], type=float)
+        "-a", "--alpha", help="Set opacity level(s)", nargs='+', default=[1.],
+        type=float, metavar='alpha')
 
     # parse arguments
     args = parser.parse_args()

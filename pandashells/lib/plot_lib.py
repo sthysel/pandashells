@@ -14,7 +14,6 @@ import pylab as pl
 import seaborn as sns
 import mpld3
 
-
 def show(args):
     # if figure saving requested
     if hasattr(args, 'savefig') and args.savefig:
@@ -127,9 +126,17 @@ def str_to_date(x):
 def draw_traces(args, df):
     y_field_list = args.y
     x = str_to_date(df[args.x[0]])
-    for y_field in y_field_list:
+    style_list = args.style
+    alpha_list = args.alpha
+    if len(style_list) != len(y_field_list):
+        style_list = [style_list[0] for y_field in y_field_list]
+    if len(alpha_list) != len(y_field_list):
+        alpha_list = [alpha_list[0] for y_field in y_field_list]
+
+
+    for y_field, style, alpha in zip(y_field_list, style_list, alpha_list):
         y = df[y_field]
-        pl.plot(x, y, args.style[0], label=y_field, alpha=args.alpha[0])
+        pl.plot(x, y, style, label=y_field, alpha=alpha)
 
 
 def refine_plot(args):

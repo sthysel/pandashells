@@ -196,4 +196,37 @@ linear regression.
   </code></pre>
   ![Output Image](/images/regplot.png?raw=true "Bar chart of gender tipper counts.")
 
+* Full Linear Regression
+  <pre><code><strong>[~]$p.example_data -d sealevel | p.regress -m 'sealevel_mm ~ year' </strong> 
+                              OLS Regression Results
+  ==============================================================================
+  Dep. Variable:            sealevel_mm   R-squared:                       0.936
+  Model:                            OLS   Adj. R-squared:                  0.936
+  Method:                 Least Squares   F-statistic:                 1.139e+04
+  Date:                Mon, 27 Jul 2015   Prob (F-statistic):               0.00
+  Time:                        16:53:03   Log-Likelihood:                -2430.8
+  No. Observations:                 780   AIC:                             4866.
+  Df Residuals:                     778   BIC:                             4875.
+  Df Model:                           1
+  Covariance Type:            nonrobust
+  ==============================================================================
+                   coef    std err          t      P>|t|      [95.0% Conf. Int.]
+  ------------------------------------------------------------------------------
+  Intercept  -6529.5086     61.454   -106.250      0.000     -6650.144 -6408.873
+  year           3.2723      0.031    106.725      0.000         3.212     3.333
+  ==============================================================================
+  Omnibus:                        3.312   Durbin-Watson:                   0.441
+  Prob(Omnibus):                  0.191   Jarque-Bera (JB):                2.836
+  Skew:                           0.054   Prob(JB):                        0.242
+  Kurtosis:                       2.725   Cond. No.                     6.29e+05
+  ==============================================================================
+
+  Warnings:
+  [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+  [2] The condition number is large, 6.29e+05. This might indicate that there are
+  strong multicollinearity or other numerical problems.
+
+  </code></pre>
+
+
 

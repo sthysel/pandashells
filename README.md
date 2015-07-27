@@ -188,6 +188,8 @@ along with the command used to generate them.
 
 Linear Regression
 ----
+Pandashells leverages the excellent Seaborn and Statsmodels libraries to handle
+linear regression.
 
 * Quick and dirty fit to a line
   <pre><code><strong>[~]$ p.linspace 0 10 20 | p.df 'df["y_true"] = .2 * df.x' 'df["noise"] = np.random.randn(20)' 'df["y"] = df.y_true + df.noise' --names x | p.regplot -x x -y y</strong> 

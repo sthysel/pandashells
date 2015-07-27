@@ -49,10 +49,12 @@ python data stack to be immediately productive.
 Installation
 ----
 <pre><code><strong>[~]$ pip install --upgrade  git+https://github.com/robdmc/pandashells.git
-</code></pre>
+</strong></code></pre>
+
 
 Requirements
 ----
+
 Pandashells was built using the 
 <a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>, and
 we strongly recommend using it to run Pandashells.  Most of the libraries required by
@@ -116,13 +118,6 @@ DataFrame Maniuplations
   total_bill    244  19.785943  8.902412  3.07  13.3475  17.795  24.1275  50.81
   tip           244   2.998279  1.383638  1.00   2.0000   2.900   3.5625  10.00
   size          244   2.569672  0.951100  1.00   2.0000   2.000   3.0000   6.00
-  </code></pre>
-
-* Break down the number of tippers by gender. Output of each command is stored as df for next command to use.
-  <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.sex.value_counts()' 'df.rename(columns={0:"count"})' -o table index</strong>
-          count
-  Male      157
-  Female     87
   </code></pre>
 
 * Find the mean tip broken down by gender and day

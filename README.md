@@ -97,9 +97,9 @@ Tool | Purpose
 --- | ---
 p.cdf | Plot emperical distribution function
 p.config | Set default pandashells configuration options
-p.crypt | Encrypt/Decrypt files using open-ssl
+p.crypt | Encrypt/decrypt files using open-ssl
 p.df | Pandas dataframe manipulation of text files
-p.example_data | Create sample csv files for training / testing
+p.example_data | Create sample csv files for training/testing
 p.facet_grid | Create faceted plots for data exploration
 p.format | Render python string templates using input data
 p.hist | Plot histograms
@@ -163,7 +163,7 @@ Visualization Tools
 ----
 Pandashells provides a number of visualization tools to help you quickly explore your data.
 All visualizations are automatically configured to show an interactive plot using the configured
-backend (default is TkAgg, but can be configured with the p.configure tool).  
+backend (default is TkAgg, but can be configured with the p.config tool).  
 
 The visualizations can also be saved to image files (e.g. .png) or rendered to html.  The html
 generated can either be opened directly in the browser to show an interactive plot (using mpld3),
@@ -187,95 +187,3 @@ along with the command used to generate them.
   ![Output Image](/images/hist.png?raw=true "Bar chart of gender tipper counts.")
 
 
-List of Tools
-===
-
-Existing Tool | Purpose
---- | ---
-p.crypt | Encrypt/Decrypt files using open-ssl tools.
-p.df |       Pandas dataframe manipulation of csv files
-p.geocode | Use google to geocode addresses
-p.parallel | Run shell command in parallel
-p.plot | Plot data
-p.rand | Generate samples from random distributions
-p.sig_edit | Perform recursive sigma editing for outlier removal
-p.hist | Create a histogram of input data
-p.linspace | Create a linearly spaced set of numbers
-p.cdf | Compute cumulative distributions of input data
-p.regress | Perform (multi-variable) linear regression
-p.scatter_matrix | plot a pandas scatter matrix of input columns
-p.regplot | plot results of single variable polynomial regression
-
-
-Planned Tool | Purpose
---- | ---
-p.cov | Create a table of covariances between collumns
-p.bar | Create a bar chart using seaborn
-p.fft | Compute fft of input data
-p.lombscargle | Compute lombscargle spectra of intput data
-p.interp | Interpolate input data
-p.map | Plot geometry on maps using basemap
-p.mapDots2html | Plot points on a google map
-p.mapPoly2html | Plot polygons on a google map
-p.mongoDump | Dump mongodb records to csv
-p.normalize | Normalize a column of numbers
-p.pgsql2csv | Dump a postgres database using sql
-p.smooth | Smooth input data
-p.lowess | Do Lowess smoothing
-p.distplot | seaborn distplot
-p.kdeplot | do 1d and 2d kde plots using seaborn
-p.facetgrid | make facet grid plots using seaborn
-p.boxplot | either using pandas or seaborn
-
-p.sshKeyPush | Push an ssh key to a remote server
-p.template | Use the jinja2 package to render templates
-p.timezone | Change timestamps between time zones
-
-Half Baked Ideas
-===
-It might be nice to have a 
-p.batch -n batch-size -g str-group-func --apply app-process --first first-group-process --last last-group-process --parallel 2 
-p.batch -n batch-size -g str-group-func --apply app-process -i input-options -o output-options --parallel 2 
-
-
-might also be nice to have a  
-p.deal --file-field column-name -i input-options -o output-options
-
-
-
-Here are some half-baked ideas for tool syntax that I'm still think about how to implement.
-
-* p.regress - statmodels linear regression with full summary output. maybe use --fit to add fit results to df
-* p.learn.regress_linear
-* p.learn.regress_ridge
-* p.learn.regress_tree
-* p.learn.regress_forest
-* p.learn.classify.logistic
-* p.learn.classify.tree
-* p.learn.classify.forest
-* p.learn.classify.svm
-
-* Always use patsy language
-
-* the model.pkl files (which can be user-def names) hold the model as well as the string used to do the fit
-
-* with --fit model.pkl
-  saves model in model.pkl and displays rms R^2 and cross_val scores as well as the original string used to do the fit and the type of model
-
-
-* with --predict model.pkl
-  loads model, input and shows _fit variable to the dataframe
-  with --stats, does same thing, but displays rms and R2
-  with --hist shows hist of residuals
-  with --plot shows fit vs residual
-
-* of course classifiers have their own metrics and maybe have a
-  --roc that plots the roc curve
-
-* with
-  --info model.pkl, just shows the model
-
-* with --desc 'my desc'  allows you to store a description that will be displayed with the --info flag
-
-* It would be nice to create a scikit.learn model/pipeline, save it to a pickle file and then
-  have a pandaShells command that would run predictions based on that model for inputs from stdin.

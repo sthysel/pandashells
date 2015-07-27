@@ -35,27 +35,8 @@ If you work with data using Python, you have almost certainly encountered
 <a href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a>.
 
 Pandashells opens up a bash api, if you will, into the python data stack with command syntax
-closely following the underlying libraries on which it is built.  This should
+closely mirroring the underlying libraries on which it is built.  This should
 allow those familiar with the python data stack to be immediately productive.
-
-
-What's with the name?
-----
-PandaShells is a riff on Pandas, the library created by Wes McKinney
-that has become the go-to tool for working with data in python.
-
-Description
-----
-If you work with data using Python, you have almost certainly encountered 
-<a href="http://pandas.pydata.org/">Pandas</a>,
-<a href="http://www.scipy.org/">SciPy</a>, 
-<a href="http://matplotlib.org/">Matplotlib</a>, 
-<a href="http://statsmodels.sourceforge.net/">Statsmodels</a> and
-<a href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and
-
-Pandashells command syntax attempts to replicate as closely as possible the
-structure of the underlying library.  This should allow those familiar with the
-python data stack to be immediately productive.
 
 
 Installation

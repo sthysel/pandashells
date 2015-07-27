@@ -157,8 +157,11 @@ DataFrame Maniuplations
          Thur  2.980333
   </code></pre>
 
-Joining files by key fields (based on pandas merge)
+Join files on key fields 
 ----
+Pandashells can join files based on a set of key fields.  This example uses
+only one field as a key, but like the pandas merge function on which it is based,
+multiple key fields can be used for the join.
 
 * Show poll resultes for the 2008 election
   <pre><code>

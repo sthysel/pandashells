@@ -95,6 +95,7 @@ Overview
   <pre><code><strong>[~]$ p.example_data -h</strong></code></pre>
   
 * Tool Description
+
 Existing Tool | Purpose
 --- | ---
 p.cdf | Plot emperical distribution function
@@ -114,7 +115,6 @@ p.rand | Generate random numbers
 p.regplot | Quickly plot linear regression of data to a polynomial
 p.regress | Perform (multi-variate) linear regression
 p.sig_edit | Remove outliers using iterative sigma-editing
-
 
 
 DataFrame Maniuplations

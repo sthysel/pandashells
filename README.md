@@ -125,7 +125,7 @@ this command:
    <pre><code> p.df 'df.groupby(by="a").b.count()' 'df.reset_index()' </code></pre>
 is equivalent to the python expressions:
 <pre><code>
-    # this 
+    # this code in a python script 
     df = df.groupby(by="a").b.count()
     df = df.reset_index()
 </pre></code>

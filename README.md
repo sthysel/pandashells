@@ -189,7 +189,7 @@ along with the command used to generate them.
   
   <pre><code><strong>[~]$ p.rand -t normal -n 500 | p.cdf -c value --names value</strong> 
   </code></pre>
-  ![Output Image](/images/cdf_plot.png?raw=true "histogram plot")
+  ![Output Image](/images/cdf_plot.png?raw=true "cdf plot")
 
 Linear Regression
 ----

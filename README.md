@@ -109,7 +109,7 @@ p.parallel | Read shell commands from stdin and run them in parallel
 p.plot | Create xy plot visualizations
 p.rand | Generate random numbers
 p.regplot | Quickly plot linear regression of data to a polynomial
-p.regress | Perform (multi-variate) linear regression
+p.regress | Perform (multi-variate) linear regression with R-like patsy syntax
 p.sig_edit | Remove outliers using iterative sigma-editing
 
 

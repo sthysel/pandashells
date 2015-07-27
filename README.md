@@ -41,7 +41,7 @@ allow those familiar with the python data stack to be immediately productive.
 Installation
 ----
 Latest release branch
-<pre><code><strong>[~]$ pip install Pandashells
+<pre><code><strong>[~]$ pip install pandashells
 </strong></code></pre>
 
 Developement branch

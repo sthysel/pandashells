@@ -48,9 +48,9 @@ Installation
 Requirements
 ----
 
-Pandashells was built using the 
-<a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>, and
-we strongly recommend using it to run Pandashells.  Most of the libraries required by
+Pandashells is both python2 and python3 compatible and was built using the 
+<a href="https://store.continuum.io/cshop/anaconda/">Anaconda Python Distribution</a>.
+We strongly recommend using Anaconda to run Pandashells.  Most of the libraries required by
 pandashells come pre-installed with Anaconda, though some tools will require additional
 libraries.
 

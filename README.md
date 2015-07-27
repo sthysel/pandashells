@@ -96,7 +96,7 @@ Overview
   
 * Tool Description
 
-Existing Tool | Purpose
+Tool | Purpose
 --- | ---
 p.cdf | Plot emperical distribution function
 p.config | Set default pandashells configuration options

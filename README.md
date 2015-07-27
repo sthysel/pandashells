@@ -191,6 +191,19 @@ along with the command used to generate them.
   </code></pre>
   ![Output Image](/images/cdf_plot.png?raw=true "cdf plot")
 
+
+Spectral Estimation
+---
+* Spectrum of a (non-uniformly sampled) time series.
+  <pre><code><strong>[~]$ p.example_data -d sealevel | p.plot -x year -y sealevel_mm</strong> 
+  </code></pre>
+  ![Output Image](/images/timeseries.png?raw=true "time series plot")
+
+  <pre><code><strong>[~]$ p.example_data -d sealevel | p.lomb_scargle -t year -y sealevel_mm --interp_exp 3 | p.plot -x period -y amp --xlim 0 1.5 --ylim 0 6.5 --xlabel 'Period years' --ylabel 'Amplitude (mm)' --title 'Global Sea Surface Height Spectrum'</strong> 
+  </code></pre>
+  ![Output Image](/images/spectrum.png?raw=true "spectrum plot")
+
+
 Linear Regression
 ----
 Pandashells leverages the excellent Seaborn and Statsmodels libraries to handle
@@ -200,15 +213,6 @@ linear regression.
   <pre><code><strong>[~]$ p.linspace 0 10 20 | p.df 'df["y_true"] = .2 * df.x' 'df["noise"] = np.random.randn(20)' 'df["y"] = df.y_true + df.noise' --names x | p.regplot -x x -y y</strong> 
   </code></pre>
   ![Output Image](/images/regplot.png?raw=true "regplot plot")
-
-* Spectrum of a (non-uniformly sampled) time series.
-  <pre><code><strong>[~]$ p.example_data -d sealevel | p.plot -x year -y sealevel_mm</strong> 
-  </code></pre>
-  ![Output Image](/images/timeseries.png?raw=true "time series plot")
-
-  <pre><code><strong>[~]$ p.example_data -d sealevel | p.lomb_scargle -t year -y sealevel_mm --interp_exp 3 | p.plot -x period -y amp --xlim 0 1.5 --ylim 0 6.5 --xlabel 'Period years' --ylabel 'Amplitude (mm)' --title 'Global Sea Surface Height Spectrum'</strong> 
-  </code></pre>
-  ![Output Image](/images/spectrum.png?raw=true "spectrum plot")
 
 
 * Full Linear Regression

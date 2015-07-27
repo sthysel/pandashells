@@ -185,7 +185,7 @@ along with the command used to generate them.
   </code></pre>
   ![Output Image](/images/hist.png?raw=true "histogram plot")
 
-* Empirical Cumulative distribution plots
+* Empirical cumulative distribution plots
   
   <pre><code><strong>[~]$ p.rand -t normal -n 500 | p.cdf -c value --names value</strong> 
   </code></pre>

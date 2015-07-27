@@ -41,7 +41,9 @@ If you work with data using Python, you have almost certainly encountered
 <a href="http://statsmodels.sourceforge.net/">Statsmodels</a> and
 <a href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and
 
-Pandashells brings commonly used features of these libraries to the bash prompt.
+Pandashells command syntax attempts to replicate as closely as possible the
+structure of the underlying library.  This should allow those familiar with the
+python data stack to be immediately productive.
 
 
 Installation
@@ -73,26 +75,21 @@ Below is a comprehensive list of the packages used in the toolset.
 * seaborn
 * statsmodels
 
-Examples
+
+General properties
 ----
-The pandaShells command syntax attempts to replicate as closely as possible the
-structure of the underlying library.  This should allow those familiar with the
-python data stack to be immediately productive.
-
-
-
-
-
-
-Most the the examples shown here
-make use of the p.df command.  This command provides pandas dataframe capability.
-If the syntax is unfamiliar to you, you are encouraged to review the
-<a href="http://pandas.pydata.org/pandas-docs/stable/">Pandas documentation</a>.
 
 * All pandaShells executables begin with a "p."  This is designed to work
   nicely with the bash-completion feature.  If you can't remember the exact
   name of a command, simply typing p.[tab] will show you a complete list of
   all pandaShells commands.
+
+* Every command can be run with a -h option to view help.  Each of these
+  help messages will contain multiple examples of how to proerly use the tool.
+
+
+DataFrame Maniuplations
+----
 
 * Show a few rows of an example data set.
   <pre><code><strong>[~]$ p.example_data -d tips | head</strong>
@@ -122,7 +119,7 @@ If the syntax is unfamiliar to you, you are encouraged to review the
   </code></pre>
 
 * Break down the number of tippers by gender. Output of each command is stored as df for next command to use.
-  <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.sex.value_counts()' 'df.rename(columns={0:"count"})' -o table,index</strong>
+  <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.sex.value_counts()' 'df.rename(columns={0:"count"})' -o table index</strong>
           count
   Male      157
   Female     87
@@ -148,6 +145,10 @@ If the syntax is unfamiliar to you, you are encouraged to review the
   <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.sex.value_counts()' 'df.rename(columns={0:"count"})' 'df.plot(kind="barh")'</strong> 
   </code></pre>
   ![Output Image](/images/gender_bar.png?raw=true "Bar chart of gender tipper counts.")
+
+
+Visualization Tools
+----
 
 * Plot tip vs total bill.
   <pre><code><strong>[~]$ p.example_data -d tips | p.plot -x total_bill -y tip -s 'o' --title 'Tip Vs Bill'</strong> 

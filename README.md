@@ -213,9 +213,19 @@ multiple key fields can be used for the join.
 
 * Join poll and electoral-college data  (Note the use of bash <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> to specify files to join.)
   <pre><code><strong>[~]$ paste &lt(p.rand -t normal -n 10000 | p.df --names normal) &lt(p.rand -t gamma -n 10000 | p.df --names gamma) | p.hist -i table -c normal gamma</strong> 
+       days state  obama  mccain                           poll            name  electors  population
+       -252    AK     43      48                      SurveyUSA          Alaska         3      710000
+       -213    AK     43      48                      Rasmussen          Alaska         3      710000
+       -176    AK     41      50                      Rasmussen          Alaska         3      710000
+       -143    AK     41      45                      Rasmussen          Alaska         3      710000
+       -112    AK     40      45                      Rasmussen          Alaska         3      710000
+        -99    AK     39      44                      Rasmussen          Alaska         3      710000
+        -65    AK     35      54            Ivan Moore Research          Alaska         3      710000
+        -58    AK     33      64                      Rasmussen          Alaska         3      710000
+        -56    AK     39      55                            ARG          Alaska         3      710000
   </code></pre>
 
-  <pre><code><strong> [~]$ p.merge &lt(p.example_data -d election) &lt(p.example_data -d electoral_college) --how left --on state | p.df -o table | head</strong> 
+  <pre><code><strong>[~]$ p.merge &lt(p.example_data -d election) &lt(p.example_data -d electoral_college) --how left --on state | p.df -o table | head</strong> 
        days state  obama  mccain                           poll            name  electors  population
        -252    AK     43      48                      SurveyUSA          Alaska         3      710000
        -213    AK     43      48                      Rasmussen          Alaska         3      710000

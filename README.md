@@ -122,12 +122,15 @@ the results of that operation.  Special consideration is taken for
 assignments such as df['a'] = df.b + 1.  These are understood
 to augment the input dataframe with a new column. By way of example,
 this command:
+
    <pre><code> p.df 'df.groupby(by="a").b.count()' 'df.reset_index()' </code></pre>
+
 is equivalent to the python expressions:
+
 <pre><code># this code in a python script 
 df = df.groupby(by="a").b.count()
 df = df.reset_index()
-</pre></code>
+</code></pre>
 
 * Show a few rows of an example data set.
 <pre><code><strong>[~]$ p.example_data -d tips | head</strong>

@@ -83,14 +83,14 @@ Overview
   all Pandashells commands.
 
 * Every command can be run with a -h option to view help.  Each of these
-  help messages will contain multiple examples of how to proerly use the tool.
+  help messages will contain multiple examples of how to properly use the tool.
 
 * Pandashells is equipped with a tool to generate sample csv files.  This tool
   provides standardized inputs for use in the tool help sections as well as this
   documentation.
   <pre><code><strong>[~]$ p.example_data -h</strong></code></pre>
   
-* Tool Description
+* Tool Descriptions
 
 Tool | Purpose
 --- | ---
@@ -279,36 +279,38 @@ linear regression.
 
 
 * Full Linear Regression
-  <pre><code><strong>[~]$p.example_data -d sealevel | p.regress -m 'sealevel_mm ~ year' </strong> 
+  <pre><code><strong>[~]$p.example_data -d sealevel | p.df 'df["sin"]=np.sin(2*np.pi*df.year)' 'df["cos"]=np.cos(2*np.pi*df.year)' | p.regress -m 'sealevel_mm ~ year + sin + cos'</strong> 
+
 
                               OLS Regression Results
   ==============================================================================
-  Dep. Variable:            sealevel_mm   R-squared:                       0.936
-  Model:                            OLS   Adj. R-squared:                  0.936
-  Method:                 Least Squares   F-statistic:                 1.139e+04
+  Dep. Variable:            sealevel_mm   R-squared:                       0.961
+  Model:                            OLS   Adj. R-squared:                  0.961
+  Method:                 Least Squares   F-statistic:                     6442.
   Date:                Mon, 27 Jul 2015   Prob (F-statistic):               0.00
-  Time:                        16:53:03   Log-Likelihood:                -2430.8
-  No. Observations:                 780   AIC:                             4866.
-  Df Residuals:                     778   BIC:                             4875.
-  Df Model:                           1
+  Time:                        23:28:11   Log-Likelihood:                -2234.0
+  No. Observations:                 780   AIC:                             4476.
+  Df Residuals:                     776   BIC:                             4495.
+  Df Model:                           3
   Covariance Type:            nonrobust
   ==============================================================================
                    coef    std err          t      P>|t|      [95.0% Conf. Int.]
   ------------------------------------------------------------------------------
-  Intercept  -6529.5086     61.454   -106.250      0.000     -6650.144 -6408.873
-  year           3.2723      0.031    106.725      0.000         3.212     3.333
+  Intercept  -6500.1722     47.829   -135.903      0.000     -6594.063 -6406.282
+  year           3.2577      0.024    136.513      0.000         3.211     3.305
+  sin           -4.6933      0.217    -21.650      0.000        -5.119    -4.268
+  cos            1.4061      0.214      6.566      0.000         0.986     1.826
   ==============================================================================
-  Omnibus:                        3.312   Durbin-Watson:                   0.441
-  Prob(Omnibus):                  0.191   Jarque-Bera (JB):                2.836
-  Skew:                           0.054   Prob(JB):                        0.242
-  Kurtosis:                       2.725   Cond. No.                     6.29e+05
+  Omnibus:                        5.332   Durbin-Watson:                   0.709
+  Prob(Omnibus):                  0.070   Jarque-Bera (JB):                5.401
+  Skew:                          -0.189   Prob(JB):                       0.0672
+  Kurtosis:                       2.846   Cond. No.                     6.29e+05
   ==============================================================================
 
   Warnings:
   [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
   [2] The condition number is large, 6.29e+05. This might indicate that there are
   strong multicollinearity or other numerical problems.
-
   </code></pre>
 
 

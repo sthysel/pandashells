@@ -40,7 +40,7 @@ allow those familiar with the python data stack to be immediately productive.
 
 Installation
 ----
-Pandashells itself is a pure-python package.  The latest release branch can be installed with
+Pandashells is a pure-python package.  The latest release branch can be installed with
 <pre><code><strong>[~]$ pip install pandashells
 </strong></code></pre>
 

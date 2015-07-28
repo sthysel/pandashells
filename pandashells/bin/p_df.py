@@ -159,6 +159,7 @@ def main():  # pragma: no cover
             datetime = datetime
             re = re
 
+        ** Important **
         When creating chains of dataframe operations (see examples), it is
         important to express your chain of operations before any options. This
         is because some options can take multiple arguments and the parser

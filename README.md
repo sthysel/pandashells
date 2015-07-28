@@ -181,7 +181,7 @@ multiple key fields can be used for the join.
 
 * Show poll resultes for the 2008 election
   <pre><code><strong>[~]$ p.example_data -d election | p.df -o table | head </strong> 
-       state  obama  mccain                           poll
+       days state  obama  mccain                           poll
        -305    OH     43      50                      SurveyUSA
        -303    PA     38      46                      Rasmussen
        -298    OR     47      47                      SurveyUSA

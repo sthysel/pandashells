@@ -212,9 +212,10 @@ multiple key fields can be used for the join.
   </pre></code>
 
 * Join poll and electoral-college data  (Note the use of bash <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> to specify files to join.)
-  <pre><code>
-  <strong>
-  [~]$ p.merge &lt((p.example_data -d election) &lt(p.example_data -d electoral_college) --how left --on state | p.df -o table | head</strong> 
+  <pre><code><strong>[~]$ paste &lt(p.rand -t normal -n 10000 | p.df --names normal) &lt(p.rand -t gamma -n 10000 | p.df --names gamma) | p.hist -i table -c normal gamma</strong> 
+  </code></pre>
+
+  <pre><code><strong> [~]$ p.merge &lt(p.example_data -d election) &lt(p.example_data -d electoral_college) --how left --on state | p.df -o table | head</strong> 
        days state  obama  mccain                           poll            name  electors  population
        -252    AK     43      48                      SurveyUSA          Alaska         3      710000
        -213    AK     43      48                      Rasmussen          Alaska         3      710000

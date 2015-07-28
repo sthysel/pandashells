@@ -25,7 +25,7 @@ What is Pandashells?
 * Perform spectral decomposition and linear regression
 * Create data visualizations that can be saved to images or rendered interactively using 
   either a native backend or html.
-* Designed to be used with unix pipes for easy integration with awk, grep, sed, etc.
+* Easily integrate with unix tools like curl, awk, grep, sed, etc.
 
 If you work with data using Python, you have almost certainly encountered 
 <a href="http://pandas.pydata.org/">Pandas</a>,

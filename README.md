@@ -130,13 +130,13 @@ df = df.reset_index()
 </pre></code>
 
 * Show a few rows of an example data set.
-  <pre><code><strong>[~]$ p.example_data -d tips | head</strong>
+<pre><code><strong>[~]$ p.example_data -d tips | head</strong>
 "total_bill","tip","sex","smoker","day","time","size"
 16.99,1.01,"Female","No","Sun","Dinner",2
 10.34,1.66,"Male","No","Sun","Dinner",3
 21.01,3.5,"Male","No","Sun","Dinner",3
 23.68,3.31,"Male","No","Sun","Dinner",2
-  </code></pre>
+</code></pre>
 
 * Transorm the sample data from csv format to table format
   <pre><code><strong>[~]$ p.example_data -d tips | p.df 'df.head()' -o table</strong>

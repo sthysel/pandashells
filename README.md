@@ -279,7 +279,7 @@ linear regression.
   ![Output Image](/images/regplot.png?raw=true "regplot plot")
 
 
-* Full Linear Regression
+* Multi-variable linear regression
   <pre><code><strong>[~]$p.example_data -d sealevel | p.df 'df["sin"]=np.sin(2*np.pi*df.year)' 'df["cos"]=np.cos(2*np.pi*df.year)' | p.regress -m 'sealevel_mm ~ year + sin + cos'</strong> 
 
 

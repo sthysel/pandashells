@@ -180,9 +180,7 @@ only one field as a key, but like the pandas merge function on which it is based
 multiple key fields can be used for the join.
 
 * Show poll resultes for the 2008 election
-  <pre><code>
-  <strong>
-  [~]$ p.example_data -d election | p.df -o table | head </strong> 
+  <pre><code><strong>[~]$ p.example_data -d election | p.df -o table | head </strong> 
        state  obama  mccain                           poll
        -305    OH     43      50                      SurveyUSA
        -303    PA     38      46                      Rasmussen
@@ -196,9 +194,7 @@ multiple key fields can be used for the join.
   </pre></code>
 
 * Show population and electoral college numbers for states
-  <pre><code>
-  <strong>
-  [~]$ p.example_data -d electoral_college | p.df -o table | head</strong> 
+  <pre><code><strong>[~]$ p.example_data -d electoral_college | p.df -o table | head</strong> 
        state            name  electors  population
           AK          Alaska         3      710000
           AL         Alabama         9     4780000

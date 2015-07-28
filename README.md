@@ -257,11 +257,12 @@ along with the command used to generate them.
 
 Spectral Estimation
 ---
-* Spectrum of a (non-uniformly sampled) time series.
+* Plot a time series over which to compute a spectrum
   <pre><code><strong>[~]$ p.example_data -d sealevel | p.plot -x year -y sealevel_mm</strong> 
   </code></pre>
   ![Output Image](/images/timeseries.png?raw=true "time series plot")
 
+* Plot the spectrum
   <pre><code><strong>[~]$ p.example_data -d sealevel | p.lomb_scargle -t year -y sealevel_mm --interp_exp 3 | p.plot -x period -y amp --xlim 0 1.5 --ylim 0 6.5 --xlabel 'Period years' --ylabel 'Amplitude (mm)' --title 'Global Sea Surface Height Spectrum'</strong> 
   </code></pre>
   ![Output Image](/images/spectrum.png?raw=true "spectrum plot")

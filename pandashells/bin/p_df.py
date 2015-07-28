@@ -213,8 +213,12 @@ def main():  # pragma: no cover
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
     arg_lib.add_args(parser, 'io_in', 'io_out', 'decorating', 'example')
+    msg = (
+        '(MUST come before any options) '
+        '[statement ...] Statement(s) to execute. '
+    )
     parser.add_argument(
-        "statement", help="[statement ...] Statement(s) to execute", nargs="*")
+        "statement", help=msg, nargs="*")
     args = parser.parse_args()
 
     # get the input dataframe

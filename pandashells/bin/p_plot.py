@@ -9,7 +9,6 @@ module_checker_lib.check_for_modules(['pandas', 'matplotlib'])
 
 
 def main():
-    #TODO: Finish this help message
     msg = textwrap.dedent(
         """
         Creates interactive xy plots.  Loosely based around matplotlib's

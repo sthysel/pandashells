@@ -32,6 +32,16 @@ def check_for_modules(module_list):
         msg += '{}\n'.format(unnamed_modules)
         raise ValueError(msg)
 
+    # try using configured backend ignoring errors so they'll be caught later
+    if set(module_list).intersection({'matplotlib', 'pylab', 'seaborn'}):
+        CONFIG = config_lib.get_config()
+        try:
+            import matplotlib
+            if matplotlib.get_backend() != CONFIG['plot_backend']:
+                matplotlib.use(CONFIG['plot_backend'])
+        except ImportError:
+            pass
+
     # initialize an error message
     msg = ''
 
@@ -39,10 +49,6 @@ def check_for_modules(module_list):
     for module in sorted(module_list):
         try:
             importlib.import_module(module)
-            if module == 'matplotlib':
-                CONFIG = config_lib.get_config()
-                import matplotlib
-                matplotlib.use(CONFIG['plot_backend'])
         except ImportError:
             # add to error message for each bad module
             msg = msg if msg else HEADER

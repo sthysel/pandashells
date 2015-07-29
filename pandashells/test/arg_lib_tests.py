@@ -170,7 +170,6 @@ class ArgLibTests(TestCase):
             '--ylog', action='store_true', dest='ylog', default=False, help=msg
         ))
 
-
         msg = "Set the x-label for the plot"
         calls.append(call('--xlabel', nargs=1, type=str, dest='xlabel',
                           help=msg))
@@ -245,19 +244,14 @@ class ArgLibTests(TestCase):
 
         msg = "Plot style(s) defaults to .-"
         calls.append(call('-s', '--style', nargs='+', type=str, dest='style',
-                     default=['.-'], help=msg))
+                     default=['.-'], help=msg, metavar='style'))
 
         # run the code under test
         args = ['xy_plotting']
         arg_lib._xy_adder(parser, *args)
-        print parser.add_argument.call_args_list
-        print
-        print calls
-
-
 
         # make sure proper calls were made
-        #self.assertEqual(parser.add_argument.call_args_list, calls)
+        self.assertEqual(parser.add_argument.call_args_list, calls)
 
     @patch('pandashells.lib.arg_lib._xy_adder')
     @patch('pandashells.lib.arg_lib._decorating_adder')

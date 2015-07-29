@@ -60,7 +60,6 @@ from dateutil.parser import parse  # noqa
 for (module, shortcut) in get_modules_and_shortcuts(sys.argv):
     exec('import {} as {}'.format(module, shortcut))
 
-#TODO  Figure out why dataframe plotting gets an extra "use"
 
 # TODO: change how tests are done to remove this funiness
 # This branch is run in the integrations tests, but since it's being

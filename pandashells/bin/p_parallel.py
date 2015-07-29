@@ -10,7 +10,6 @@ from pandashells.lib import parallel_lib, arg_lib
 def main():
     msg = "Tool to run shell commands in parallel.  Spawns processes "
     msg += "to concurrently run commands supplied on stdin. "
-    #time seq 10 | p.format -t 'sleep 1; echo finished {n}' --names n -i noheader | p.parallel -n 10
 
     msg = textwrap.dedent(
         """
@@ -36,7 +35,7 @@ def main():
             * Suppress stdout from processes and echo commands
                 time seq 10 \\
                 | p.format -t 'sleep 1; echo done {n}' --names n -i noheader \\
-                | p.parallel -n 10 -c -s stdout 
+                | p.parallel -n 10 -c -s stdout
 
             * Make a histogram of how long the individual jobs took
                 time seq 100 \\
@@ -51,7 +50,6 @@ def main():
     # read command line arguments
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
-
 
     msg = "The number of jobs to run in parallel. If not supplied, will "
     msg += "default to the number of detected cores."

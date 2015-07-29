@@ -14,6 +14,7 @@ import pylab as pl
 import seaborn as sns
 import mpld3
 
+
 def show(args):
     # if figure saving requested
     if hasattr(args, 'savefig') and args.savefig:
@@ -132,7 +133,6 @@ def draw_traces(args, df):
         style_list = [style_list[0] for y_field in y_field_list]
     if len(alpha_list) != len(y_field_list):
         alpha_list = [alpha_list[0] for y_field in y_field_list]
-
 
     for y_field, style, alpha in zip(y_field_list, style_list, alpha_list):
         y = df[y_field]

@@ -3,6 +3,7 @@
 # standard library imports
 import sys
 import argparse
+import textwrap
 
 from pandashells.lib import module_checker_lib, arg_lib, io_lib, plot_lib
 
@@ -22,13 +23,58 @@ import statsmodels.formula.api as sm
 
 
 def main():
-    msg = "Performs (multivariable) linear regression.  Fitting model "
-    msg += "is specified using the patsy language.  Input is from stdin "
-    msg += "and output is either fitting information or the input data "
-    msg += "with a column containing fit results and residuals appended."
+    msg = textwrap.dedent(
+        """
+        Performs (multivariable) linear regression.  The fitting model
+        is specified using the R-like, patsy syntax.  Input is from stdin
+        and output is either fitting information or the input data
+        with columns added for the fit and residuals.
 
-    # read command line arguments
-    parser = argparse.ArgumentParser(description=msg)
+        -----------------------------------------------------------------------
+        Examples:
+            * Fit a line to the sea-level data
+                p.example_data -d sealevel | p.regress -m 'sealevel_mm ~ year'
+
+            * Fit a trend plus annual cycle to sealevel data
+                p.example_data -d sealevel \\
+                | p.df 'df["sin"] =  np.sin(2 * np.pi * df.year)' \\
+                | p.df 'df["cos"] = np.cos(2 * np.pi * df.year)' \\
+                | p.regress -m 'sealevel_mm ~ year + cos + sin'
+
+            * Examine residual ECDF of trend plus annual fit
+                p.example_data -d sealevel \\
+                | p.df 'df["sin"] =  np.sin(2 * np.pi * df.year)' \\
+                | p.df 'df["cos"] = np.cos(2 * np.pi * df.year)' \\
+                | p.regress -m 'sealevel_mm ~ year + cos + sin' --fit \\
+                | p.cdf -c 'resid_' --title 'ECDF of trend + annual'
+
+            * Detrend sealevel data to more clearly reveal oscillations
+                p.example_data -d sealevel \\
+                | p.regress -m 'sealevel_mm ~ year' --fit \\
+                | p.plot -x year -y resid_ --ylabel 'Trend removed (mm)' \\
+                         --title 'Global Sea Surface Height'
+
+            * Set origin of sealevel data to 0 and regress with no intercept
+                p.example_data -d sealevel\\
+                | p.df 'df["year"] = df.year - df.year.iloc[0]'\\
+                'df["sealevel_mm"] = df.sealevel_mm - df.sealevel_mm.iloc[0]'\\
+                | p.regress -m 'sealevel_mm ~ year - 1' --fit\\
+                | p.plot -x year -y sealevel_mm fit_ --style '.' '-'\\
+                     --alpha .2 1 --legend best --title 'Force Zero Intercept'
+
+        -----------------------------------------------------------------------
+        """
+    )
+
+    #  read command line arguments
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=msg)
+
+
+
+
+
+
 
     arg_lib.add_args(parser, 'io_in', 'io_out', 'example')
 

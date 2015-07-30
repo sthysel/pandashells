@@ -56,7 +56,7 @@ def main():
 
     # print contents of data file to output
     f_name = f_dict[args.dataset[0]]
-    with open(f_name) as in_file:
+    with open(f_name, encoding='utf8') as in_file:
         try:
             # line by line avoids weird sys.excepthook bug on pipe to head
             for line in in_file:

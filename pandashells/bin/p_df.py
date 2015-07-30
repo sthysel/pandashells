@@ -117,7 +117,6 @@ def process_command(args, cmd, df):
     else:
         # put results of command in temp var
         cmd = 'df = {}'.format(cmd)
-        exec(cmd)
         df = execute(cmd, scope_entries={'df': df}, retval_name='df')
 
     # make sure df is still dataframe and return

@@ -4,8 +4,8 @@
 try:
     import pandas as pd
     import numpy as np
-# will catch import errors in module_checker_lib
-except ImportError:
+# will catch import errors in module_checker_lib so won't test this branch
+except ImportError:  # pragma: nocover
     pass
 
 

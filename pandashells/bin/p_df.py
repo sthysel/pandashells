@@ -47,7 +47,7 @@ def get_modules_and_shortcuts(command_list):
         out = list(set([('pylab', 'pl')] + out))
 
     # make sure required modules are installed
-    module_checker_lib.check_for_modules([ m for (m, s) in out])
+    module_checker_lib.check_for_modules([m for (m, s) in out])
 
     return out
 
@@ -61,8 +61,6 @@ def execute(cmd, scope_entries=None, retval_name=None):
         scope[shortcut] = import_module(module)
     exec(cmd, scope)
     return scope.get(retval_name, None)
-
-
 
 
 # TODO: same as above

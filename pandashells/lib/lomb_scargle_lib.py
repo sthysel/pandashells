@@ -7,7 +7,6 @@ from pandashells.lib import module_checker_lib
 # import required dependencies
 module_checker_lib.check_for_modules(['gatspy', 'pandas', 'numpy'])
 
-import gatspy
 import pandas as pd
 import numpy as np
 
@@ -71,6 +70,11 @@ def lomb_scargle(df, time_col, val_col, interp_exponent=0, freq_order=False):
     :rtype: Pandas DataFrame
     :returns: A dataframe with columns: period, freq, power, amplitude
     """
+    # do gatspy import here to avoid loading plot libraries when this
+    # module is imported in __init__.py
+    # which then doesn't allow for doing matplotlib.use() later
+    import gatspy
+
     # only care about timestamped values
     df = df[[time_col, val_col]].dropna()
 

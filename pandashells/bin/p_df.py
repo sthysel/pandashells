@@ -45,12 +45,11 @@ def get_modules_and_shortcuts(command_list):
     ]
     if needs_plots(command_list):
         out = list(set([('pylab', 'pl')] + out))
-    return out
 
-# make sure all the required modules are installed
-module_checker_lib.check_for_modules([
-    m for (m, s) in get_modules_and_shortcuts(sys.argv)
-])
+    # make sure required modules are installed
+    module_checker_lib.check_for_modules([ m for (m, s) in out])
+
+    return out
 
 
 def execute(cmd, scope_entries=None, retval_name=None):
@@ -64,12 +63,6 @@ def execute(cmd, scope_entries=None, retval_name=None):
     return scope.get(retval_name, None)
 
 
-# TODO: change how tests are done to remove this funiness
-# This branch is run in the integrations tests, but since it's being
-# run from a system call, coverage doesn't know about it.  I'm
-# labeling it as no_cover because it actually does get run.
-if needs_plots(sys.argv):  # pragma: no cover
-    from pandashells.lib import plot_lib
 
 
 # TODO: same as above
@@ -77,6 +70,7 @@ if needs_plots(sys.argv):  # pragma: no cover
 # run from a system call, coverage doesn't know about it.  I'm
 # labeling it as no_cover because it actually does get run.
 def exec_plot_command(args, cmd, df):  # pragma: no cover
+    from pandashells.lib import plot_lib
     plot_lib.set_plot_styling(args)
     execute(cmd, scope_entries={'df': df})
     plot_lib.refine_plot(args)
